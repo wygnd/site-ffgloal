@@ -1,0 +1,61 @@
+@import "./includes";
+
+.btn {
+  @include button;
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all .4s ease-out;
+  background: var(--head);
+  border: 2px solid var(--head);
+  color: var(--primary);
+  text-decoration: none;
+  width: fit-content;
+  transition: all .4s ease-out;
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    path {
+      transition: stroke .4s ease-out;
+    }
+  }
+
+  &:hover {
+    color: var(--head);
+    background: transparent;
+
+    svg {
+      path {
+        stroke: var(--head);
+      }
+    }
+  }
+
+  &__invert {
+    border: 2px solid var(--card);
+    background: transparent;
+    color: var(--card);
+
+    svg {
+      path {
+        stroke: var(--card);
+      }
+    }
+
+    &:hover {
+      color: var(--head);
+      background: var(--card);
+
+      svg {
+        path {
+          stroke: var(--head);
+        }
+      }
+    }
+  }
+}

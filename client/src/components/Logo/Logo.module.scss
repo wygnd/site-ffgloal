@@ -1,0 +1,14 @@
+@import "../../styles/includes";
+
+.logo {
+  &_holder {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &_text {
+      @include bold;
+      color: var(--card);
+    }
+  }
+}
