@@ -7,7 +7,7 @@
     gap: 12px;
 
     &_text {
-      @include bold;
+      @include bold_logo;
       color: var(--card);
     }
   }
