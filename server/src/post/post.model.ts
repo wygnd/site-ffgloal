@@ -1,6 +1,7 @@
-import {Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
+import {BelongsTo, BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {PostMetaModel} from "./post-meta.model";
+import {StatusModel} from "../status/status.model";
+import {PostStatusModel} from "./post-status.model";
 
 @Table({tableName: "posts", createdAt: false, timestamps: false, updatedAt: false})
 export class PostModel extends Model<PostModel> {
@@ -16,10 +17,6 @@ export class PostModel extends Model<PostModel> {
     @Column({type: DataType.TEXT('long')})
     content: string;
 
-    @ApiProperty({example: 1, description: "Уникальный идентификатор типа статуса (внешний ключ)"})
-        // @ForeignKey(() => )
-    status_id: number;
-
     @ApiProperty({example: "Гланвая страница", description: "Название записи"})
     @Column({type: DataType.STRING, allowNull: false})
     name: string;
@@ -32,6 +29,6 @@ export class PostModel extends Model<PostModel> {
     @Column({type: DataType.STRING, allowNull: false})
     type: string;
 
-    // @HasMany(() => PostMetaModel)
-    // post_meta: PostMetaModel[];
+    @BelongsToMany(() => StatusModel, () => PostStatusModel)
+    status: StatusModel[]
 }

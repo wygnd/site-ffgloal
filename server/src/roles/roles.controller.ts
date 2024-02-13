@@ -5,7 +5,7 @@ import {CreateRoleDto} from "./dto/create-role.dto";
 import {RolesModel} from "./roles.model";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 
-@ApiTags('roles')
+@ApiTags('Roles')
 @UseGuards(JwtAuthGuard)
 @Controller('roles')
 export class RolesController {
