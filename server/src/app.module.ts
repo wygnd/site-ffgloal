@@ -15,6 +15,8 @@ import {StatusModel} from "./status/status.model";
 import {PostStatusModel} from "./post/post-status.model";
 import { UploadsModule } from './uploads/uploads.module';
 import {UploadModel} from "./uploads/upload.model";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import {join} from "path";
 
 @Module({
   imports: [
@@ -39,7 +41,11 @@ import {UploadModel} from "./uploads/upload.model";
     AuthModule,
     PostModule,
     StatusModule,
-    UploadsModule
+    UploadsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '/static'),
+      serveRoot: "/uploads"
+    })
   ],
   controllers: [],
   providers: [],

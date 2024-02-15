@@ -6,16 +6,18 @@ import {StatusService} from "../status/status.service";
 import {JwtService} from "@nestjs/jwt";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
 import {ChangePostDto} from "./dto/change-post.dto";
+import {UsersService} from "../users/users.service";
 
 @Injectable()
 export class PostService {
   constructor(@InjectModel(PostModel) private postRepository: typeof PostModel,
               private statusService: StatusService,
-              private jwtService: JwtService) {
+              private jwtService: JwtService,
+              private userService: UsersService) {
   }
 
   async createPost(postDto: CreatePostDto, token: string) {
-    const user = this.getUserByToken(token);
+    const user = this.userService.getUserByToken(token);
     const post = await this.postRepository.create({...postDto, author_id: user.user_id});
     const status = await this.statusService.getStatusByValue("Draft");
     await post.$set("status", status.status_id);
@@ -54,7 +56,7 @@ export class PostService {
   }
 
   async changePostData(dto: ChangePostDto, token: string) {
-    const user = this.getUserByToken(token);
+    const user = this.userService.getUserByToken(token);
     const post = await this.postRepository.findByPk(dto.post_id, {include: {all: true}});
 
     if (!post) {
@@ -77,20 +79,5 @@ export class PostService {
       type: post.type,
       menu_order: post.menu_order
     }, token);
-  }
-
-  private getUserByToken(token: string) {
-    try {
-      const token_name = token.split(' ')[0];
-      const token_value = token.split(' ')[1];
-
-      if (token_name !== "Bearer" || !token_value) {
-        throw new HttpException("", HttpStatus.FORBIDDEN);
-      }
-
-      return this.jwtService.verify(token_value);
-    } catch (e) {
-      throw new HttpException(e, HttpStatus.FORBIDDEN);
-    }
   }
 }

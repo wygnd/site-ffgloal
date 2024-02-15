@@ -30,6 +30,7 @@ export class UploadModel extends Model<UploadModel> {
     description: "Размер файла (для последующей фильтрации и отчистке файлов)",
     required: true
   })
+
   @Column({type: DataType.STRING, allowNull: false})
   weight: string;
 }

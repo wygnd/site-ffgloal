@@ -4,11 +4,13 @@ import {UserModel} from "./user.model";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {RolesService} from "../roles/roles.service";
 import {RolesModel} from "../roles/roles.model";
+import {JwtService} from "@nestjs/jwt";
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(UserModel) private userRepository: typeof UserModel,
-              private rolesServices: RolesService) {
+              private rolesServices: RolesService,
+              private jwtService: JwtService) {
   }
 
   async createUser(new_user: CreateUserDto) {
@@ -30,5 +32,20 @@ export class UsersService {
 
   async getUserByEmail(email: string){
     return this.userRepository.findOne({where: {email}, include: [RolesModel]})
+  }
+
+  getUserByToken(token: string) {
+    try {
+      const token_name = token.split(' ')[0];
+      const token_value = token.split(' ')[1];
+
+      if (token_name !== "Bearer" || !token_value) {
+        throw new HttpException("", HttpStatus.FORBIDDEN);
+      }
+
+      return this.jwtService.verify(token_value);
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.FORBIDDEN);
+    }
   }
 }
