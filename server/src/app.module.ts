@@ -13,6 +13,8 @@ import {PostModel} from "./post/post.model";
 import { StatusModule } from './status/status.module';
 import {StatusModel} from "./status/status.model";
 import {PostStatusModel} from "./post/post-status.model";
+import { UploadsModule } from './uploads/uploads.module';
+import {UploadModel} from "./uploads/upload.model";
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import {PostStatusModel} from "./post/post-status.model";
       username: process.env.DB_USERNAME_MYSQL,
       password: process.env.DB_PASSWORD_MYSQL,
       database: process.env.DB_DATABASE_MYSQL,
-      models: [UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel],
+      models: [UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel],
       synchronize: true,
       sync: {alter: false},
       autoLoadModels: true,
@@ -36,7 +38,8 @@ import {PostStatusModel} from "./post/post-status.model";
     RolesModule,
     AuthModule,
     PostModule,
-    StatusModule
+    StatusModule,
+    UploadsModule
   ],
   controllers: [],
   providers: [],

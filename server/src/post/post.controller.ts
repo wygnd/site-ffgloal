@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Header, Param, Post, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Header, Headers, Param, Patch, Post, Req, UseGuards} from '@nestjs/common';
 import {PostService} from './post.service';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
@@ -6,8 +6,8 @@ import {CreatePostDto} from "./dto/create-post.dto";
 import {PostModel} from "./post.model";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
-import {UserModel} from "../users/user.model";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
+import {ChangePostDto} from "./dto/change-post.dto";
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -17,21 +17,19 @@ export class PostController {
 
   @ApiOperation({summary: "Создание новой записи"})
   @ApiResponse({status: 200, type: PostModel})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
-  createPost(@Body() dto: CreatePostDto, @Req() req: Request) {
-    return this.postService.createPost(dto, req)
+  createPost(@Body() dto: CreatePostDto, @Headers('Authorization') token: string) {
+    return this.postService.createPost(dto, token)
   }
 
   @ApiOperation({summary: "Получить все записи по типу"})
-  @Roles("ADMIN")
-  @UseGuards(RolesGuard)
   @Get('/:type')
   getPostsByType(@Param('type') type: string) {
     return this.postService.getPostsByType(type);
   }
 
-  @ApiOperation({summary: "Удаление записи по уникальному идентификатору"})
+  @ApiOperation({summary: "Удаление записи"})
   @Roles("ADMIN", "EDITOR")
   @UseGuards(RolesGuard)
   @Delete('/:post_id')
@@ -43,5 +41,19 @@ export class PostController {
   @Post('/status')
   changePostStatus(@Body() dto: ChangePostStatusDto) {
     return this.postService.changePostStatus(dto);
+  }
+
+  @ApiOperation({summary: "Изменение записи"})
+  @Patch('/change')
+  changePost(@Body() dto: ChangePostDto, @Headers('Authorization') token: string) {
+    return this.postService.changePostData(dto, token);
+  }
+
+  @ApiOperation({summary: "Клонировать запись"})
+  @Roles("ADMIN", "EDITOR")
+  @UseGuards(RolesGuard,)
+  @Post('/clone/:post_id')
+  clonePost(@Param('post_id') post_id: number, @Headers('Authorization') token: string) {
+    return this.postService.clonePost(post_id, token);
   }
 }

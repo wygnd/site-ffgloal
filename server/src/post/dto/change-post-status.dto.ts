@@ -4,7 +4,7 @@ import {ApiProperty} from "@nestjs/swagger";
 export class ChangePostStatusDto {
   @ApiProperty({example: "1", description: "Уникальный идентификатор записи"})
   @IsNotEmpty()
-  readonly post_id: string;
+  readonly post_id: number;
 
   @ApiProperty({example: "1", description: "Уникальный идентификатор статуса"})
   @IsNotEmpty()

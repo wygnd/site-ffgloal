@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsNotEmpty, IsNumber, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreatePostDto {
@@ -21,4 +21,8 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   readonly type: string;
+
+  @ApiProperty({example: 0, description: "Позиция записи", required: false, default: 0})
+  @IsNumber()
+  menu_order: number;
 }

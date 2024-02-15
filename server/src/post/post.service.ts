@@ -1,10 +1,11 @@
-import {HttpException, HttpStatus, Injectable, Req} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {PostModel} from "./post.model";
 import {CreatePostDto} from "./dto/create-post.dto";
 import {StatusService} from "../status/status.service";
 import {JwtService} from "@nestjs/jwt";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
+import {ChangePostDto} from "./dto/change-post.dto";
 
 @Injectable()
 export class PostService {
@@ -13,11 +14,11 @@ export class PostService {
               private jwtService: JwtService) {
   }
 
-  async createPost(postDto: CreatePostDto, @Req() req: Request) {
-    const user = this.getUserByToken(req.headers['authorization']);
+  async createPost(postDto: CreatePostDto, token: string) {
+    const user = this.getUserByToken(token);
     const post = await this.postRepository.create({...postDto, author_id: user.user_id});
     const status = await this.statusService.getStatusByValue("Draft");
-    await post.$set("status", [status.status_id])
+    await post.$set("status", status.status_id);
     post.status = status;
     return post;
   }
@@ -50,6 +51,32 @@ export class PostService {
 
     await post.$set('status', status.status_id);
     return this.postRepository.findByPk(dto.post_id, {include: {all: true}});
+  }
+
+  async changePostData(dto: ChangePostDto, token: string) {
+    const user = this.getUserByToken(token);
+    const post = await this.postRepository.findByPk(dto.post_id, {include: {all: true}});
+
+    if (!post) {
+      throw new HttpException(`Такой записи не существует`, HttpStatus.NOT_FOUND);
+    }
+    await post.update({...dto, author_id: user.user_id,})
+    return post;
+  }
+
+  async clonePost(post_id: number, token: string) {
+    const post = await this.postRepository.findByPk(post_id, {attributes: {exclude: ['post_id', 'author_id', 'createdAt']}});
+    if (!post) {
+      throw new HttpException(`Такой записи не существует`, HttpStatus.NOT_FOUND);
+    }
+    post.name = post.name + ` copy`
+    return await this.createPost({
+      title: post.title,
+      name: post.name,
+      content: post.content,
+      type: post.type,
+      menu_order: post.menu_order
+    }, token);
   }
 
   private getUserByToken(token: string) {
