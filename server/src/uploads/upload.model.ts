@@ -12,9 +12,9 @@ export class UploadModel extends Model<UploadModel> {
   @Column({type: DataType.STRING, allowNull: false})
   name: string;
 
-  @ApiProperty({example: ".mp4", description: "Расширение файла", required: true})
+  @ApiProperty({example: "/static/files/text.txt", description: "Путь до файла, если изображение - путь до размера large"})
   @Column({type: DataType.STRING, allowNull: false})
-  ext: string;
+  url: string;
 
   @ApiProperty({
     example: 1,
@@ -26,11 +26,11 @@ export class UploadModel extends Model<UploadModel> {
   author_id: number;
 
   @ApiProperty({
-    example: "124MB",
+    example: 124,
     description: "Размер файла (для последующей фильтрации и отчистке файлов)",
     required: true
   })
 
-  @Column({type: DataType.STRING, allowNull: false})
-  weight: string;
+  @Column({type: DataType.INTEGER, allowNull: false})
+  size: number;
 }

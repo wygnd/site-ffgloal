@@ -36,10 +36,12 @@
     "cookie-parser": "^1.4.6",
     "mongoose": "^8.1.1",
     "mysql2": "^3.9.1",
+    "nestjs-sharp": "^1.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "sequelize": "^6.36.0",
     "sequelize-typescript": "^2.1.6",
+    "sharp": "^0.33.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

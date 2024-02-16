@@ -19,13 +19,13 @@ export class UploadsController {
   @ApiOperation({summary: "Загрузка файла"})
   @ApiResponse({status: 200, type: UploadModel})
   @Post('/upload')
-  @UseInterceptors(FilesInterceptor('files', 10))
-  uploadFile(@UploadedFiles(
-    new ParseFilePipeBuilder()
-      .addFileTypeValidator({fileType: 'svg'})
-      .addMaxSizeValidator({maxSize: 5000000})
-      .build({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY}),
-  ) files: Express.Multer.File[], @Headers("Authorization") token: string) {
-  return this.uploadsService.uploadFiles(files, token);
+  @UseInterceptors(FilesInterceptor('file', 10))
+  async uploadFile(@UploadedFiles(
+    // new ParseFilePipeBuilder()
+      // .addFileTypeValidator({fileType: 'svg'})
+      // .addMaxSizeValidator({maxSize: 5000000})
+      // .build({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY}),
+  ) files: Express.Multer.File[]) {
+  return await this.uploadsService.uploadFiles(files);
   }
 }
