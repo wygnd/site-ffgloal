@@ -1,5 +1,8 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {Column, DataType, HasOne, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
+import {UploadsTypesModel} from "../uploads/uploads-types.model";
+import {UploadModel} from "../uploads/upload.model";
+
 @Table({tableName: "sizes", timestamps: false, updatedAt: false, createdAt: false})
 export class SizeModel extends Model<SizeModel> {
   @ApiProperty({example: 1, description: "Уникальный иденитфикатор", required: true})
@@ -17,4 +20,7 @@ export class SizeModel extends Model<SizeModel> {
   @ApiProperty({example: "image_150.webp", description: "Размер изображения(thumbnail)"})
   @Column({type: DataType.STRING, allowNull: false})
   thumbnail: string;
+
+  @HasOne(() => UploadModel)
+  upload_type: UploadModel;
 }

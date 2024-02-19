@@ -8,6 +8,6 @@ export class SizeService {
   constructor(@InjectModel(SizeModel) private sizeRepository: typeof SizeModel) {}
 
   async createSizeField(dto: CreateSizeDto) {
-
+      return await this.sizeRepository.create(dto);
   }
 }

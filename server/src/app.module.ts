@@ -18,6 +18,10 @@ import {UploadModel} from "./uploads/upload.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from "path";
 import { SizeModule } from './size/size.module';
+import { TypeModule } from './type/type.module';
+import {TypeModel} from "./type/type.model";
+import {UploadsTypesModel} from "./uploads/uploads-types.model";
+import {SizeModel} from "./size/size.model";
 
 @Module({
   imports: [
@@ -31,7 +35,7 @@ import { SizeModule } from './size/size.module';
       username: process.env.DB_USERNAME_MYSQL,
       password: process.env.DB_PASSWORD_MYSQL,
       database: process.env.DB_DATABASE_MYSQL,
-      models: [UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel],
+      models: [UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, UploadsTypesModel, SizeModel],
       synchronize: true,
       sync: {alter: false},
       autoLoadModels: true,
@@ -47,7 +51,8 @@ import { SizeModule } from './size/size.module';
       rootPath: join(__dirname, '..', '/static'),
       serveRoot: "/uploads"
     }),
-    SizeModule
+    SizeModule,
+    TypeModule
   ],
   controllers: [],
   providers: [],

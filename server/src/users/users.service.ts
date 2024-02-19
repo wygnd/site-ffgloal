@@ -5,6 +5,7 @@ import {CreateUserDto} from "./dto/create-user.dto";
 import {RolesService} from "../roles/roles.service";
 import {RolesModel} from "../roles/roles.model";
 import {JwtService} from "@nestjs/jwt";
+import {IUser} from "./interface/user.interface";
 
 @Injectable()
 export class UsersService {
@@ -34,7 +35,7 @@ export class UsersService {
     return this.userRepository.findOne({where: {email}, include: [RolesModel]})
   }
 
-  getUserByToken(token: string) {
+  getUserByToken(token: string): IUser {
     try {
       const token_name = token.split(' ')[0];
       const token_value = token.split(' ')[1];

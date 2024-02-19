@@ -2,13 +2,16 @@ import {
   Controller, Headers,
   HttpStatus,
   ParseFilePipeBuilder,
-  Post, UploadedFiles,
+  Post, UploadedFiles, UseGuards,
   UseInterceptors
 } from '@nestjs/common';
 import {UploadsService} from './uploads.service';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {UploadModel} from "./upload.model";
 import {FilesInterceptor} from "@nestjs/platform-express";
+import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import {Roles} from "../auth/roles-auth.decorator";
+import {RolesGuard} from "../auth/roles.guard";
 
 @ApiTags('uploads')
 @Controller('uploads')
@@ -18,14 +21,15 @@ export class UploadsController {
 
   @ApiOperation({summary: "Загрузка файла"})
   @ApiResponse({status: 200, type: UploadModel})
+  @Roles("ADMIN", "EDITOR")
+  @UseGuards(RolesGuard)
   @Post('/upload')
   @UseInterceptors(FilesInterceptor('file', 10))
   async uploadFile(@UploadedFiles(
-    // new ParseFilePipeBuilder()
-      // .addFileTypeValidator({fileType: 'svg'})
-      // .addMaxSizeValidator({maxSize: 5000000})
-      // .build({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY}),
-  ) files: Express.Multer.File[]) {
-  return await this.uploadsService.uploadFiles(files);
+    new ParseFilePipeBuilder()
+      .addMaxSizeValidator({maxSize: 5000000})
+      .build({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY}),
+  ) files: Express.Multer.File[], @Headers('Authorization') token: string) {
+    return await this.uploadsService.uploadFiles(files, token);
   }
 }
