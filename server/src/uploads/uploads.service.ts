@@ -149,9 +149,10 @@ export class UploadsService {
             url: `/static/uploads/${hashed}_1024.webp`,
             name: `${hashed}_1024.webp`,
             size: file.size,
+            size_id: createdSizes.size_id
           })
           await upload.$set('type', type.type_id)
-          await upload.$set('size_obj_id', createdSizes.size_id);
+          await upload.$set('size_model', createdSizes.size_id);
 
           return await this.uploadRepository.findByPk(upload.upload_id, {include: {all: true}});
         } catch (e) {

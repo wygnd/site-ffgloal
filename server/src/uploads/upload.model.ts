@@ -47,5 +47,5 @@ export class UploadModel extends Model<UploadModel> {
   size_id: number;
 
   @BelongsTo(() => SizeModel)
-  size_obj_id: SizeModel
+  size_model: SizeModel
 }

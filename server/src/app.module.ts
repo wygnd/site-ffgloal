@@ -48,7 +48,7 @@ import {SizeModel} from "./size/size.model";
     StatusModule,
     UploadsModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '/static'),
+      rootPath: join(__dirname, '/static'),
       serveRoot: "/uploads"
     }),
     SizeModule,
