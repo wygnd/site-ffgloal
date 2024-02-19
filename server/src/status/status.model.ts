@@ -2,6 +2,8 @@ import {BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescrip
 import {ApiProperty} from "@nestjs/swagger";
 import {PostModel} from "../post/post.model";
 import {PostStatusModel} from "../post/post-status.model";
+import {PageModel} from "../page/page.model";
+import {PageStatusModel} from "../page/page-status.model";
 
 @Table({tableName: "status", timestamps: false, updatedAt: false, createdAt: false})
 export class StatusModel extends Model<StatusModel> {
@@ -19,5 +21,8 @@ export class StatusModel extends Model<StatusModel> {
   description: string;
 
   @BelongsToMany(() => PostModel, () => PostStatusModel)
-  status: PostModel
+  post: PostModel
+
+  @BelongsToMany(() => PageModel, () => PageStatusModel)
+  page: PageModel
 }

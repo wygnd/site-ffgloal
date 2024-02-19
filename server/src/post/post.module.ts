@@ -7,10 +7,12 @@ import {PostStatusModel} from "./post-status.model";
 import {StatusModel} from "../status/status.model";
 import {StatusModule} from "../status/status.module";
 import {UsersModule} from "../users/users.module";
+import {PageModel} from "../page/page.model";
+import {PostPageModel} from "./post-page.model";
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([PostModel, StatusModel, PostStatusModel]),
+    SequelizeModule.forFeature([PostModel, StatusModel, PostStatusModel, PageModel, PostPageModel]),
     StatusModule,
     UsersModule
   ],

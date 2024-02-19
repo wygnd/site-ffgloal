@@ -7,21 +7,25 @@ import {RolesModule} from './roles/roles.module';
 import {UserModel} from "./users/user.model";
 import {RolesModel} from "./roles/roles.model";
 import {UserRolesModel} from "./roles/user-roles.model";
-import { AuthModule } from './auth/auth.module';
-import { PostModule } from './post/post.module';
+import {AuthModule} from './auth/auth.module';
+import {PostModule} from './post/post.module';
 import {PostModel} from "./post/post.model";
-import { StatusModule } from './status/status.module';
+import {StatusModule} from './status/status.module';
 import {StatusModel} from "./status/status.model";
 import {PostStatusModel} from "./post/post-status.model";
-import { UploadsModule } from './uploads/uploads.module';
+import {UploadsModule} from './uploads/uploads.module';
 import {UploadModel} from "./uploads/upload.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from "path";
-import { SizeModule } from './size/size.module';
-import { TypeModule } from './type/type.module';
+import {SizeModule} from './size/size.module';
+import {TypeModule} from './type/type.module';
 import {TypeModel} from "./type/type.model";
 import {UploadsTypesModel} from "./uploads/uploads-types.model";
 import {SizeModel} from "./size/size.model";
+import {PageModule} from './page/page.module';
+import {PostPageModel} from "./post/post-page.model";
+import {PageModel} from "./page/page.model";
+import {PageStatusModel} from "./page/page-status.model";
 
 @Module({
   imports: [
@@ -29,15 +33,18 @@ import {SizeModel} from "./size/size.model";
       envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
-      dialect: "mysql",
-      host: process.env.DB_HOST_MYSQL,
-      port: +process.env.DB_PORT_MYSQL,
-      username: process.env.DB_USERNAME_MYSQL,
-      password: process.env.DB_PASSWORD_MYSQL,
-      database: process.env.DB_DATABASE_MYSQL,
-      models: [UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, UploadsTypesModel, SizeModel],
+      dialect: "postgres",
+      host: process.env.DB_HOST_PG,
+      port: +process.env.DB_PORT_PG,
+      username: process.env.DB_USERNAME_PG,
+      password: process.env.DB_PASSWORD_PG,
+      database: process.env.DB_DATABASE_PG,
+      models: [
+        UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, UploadsTypesModel, SizeModel, PageModel, PostPageModel,
+        PageStatusModel
+      ],
       synchronize: true,
-      sync: {alter: false},
+      sync: {alter: true, force: true},
       autoLoadModels: true,
     }),
     // MongooseModule.forRoot(process.env.DB_MONGO),
@@ -52,7 +59,8 @@ import {SizeModel} from "./size/size.model";
       serveRoot: "/uploads"
     }),
     SizeModule,
-    TypeModule
+    TypeModule,
+    PageModule
   ],
   controllers: [],
   providers: [],

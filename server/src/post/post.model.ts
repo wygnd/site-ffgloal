@@ -4,6 +4,8 @@ import {StatusModel} from "../status/status.model";
 import {PostStatusModel} from "./post-status.model";
 import {UserModel} from "../users/user.model";
 import {IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {PageModel} from "../page/page.model";
+import {PostPageModel} from "./post-page.model";
 
 @Table({tableName: "posts", updatedAt: false})
 export class PostModel extends Model<PostModel> {
@@ -45,5 +47,8 @@ export class PostModel extends Model<PostModel> {
   type: string;
 
   @BelongsToMany(() => StatusModel, () => PostStatusModel)
-  status: StatusModel
+  status: StatusModel;
+
+  @BelongsToMany(() => PageModel, () => PostPageModel)
+  pages: PageModel[];
 }
