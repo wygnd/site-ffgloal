@@ -6,7 +6,7 @@ import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateTypeDto} from "./dto/create-type.dto";
 import {TypeModel} from "./type.model";
 
-@ApiTags('types')
+@ApiTags('Types')
 @Controller('types')
 @Roles("ADMIN")
 @UseGuards(RolesGuard)

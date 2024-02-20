@@ -12,6 +12,10 @@ export class AuthService {
     }
 
     async signIn(user: CreateUserDto) {
+        const candidate = await this.userService.getUserByEmail(user.email);
+        if(!candidate) {
+         throw new HttpException(`Пользователя не существует`, HttpStatus.NOT_FOUND);
+        }
         const userData = await this.validateUser(user);
         return this.generateToken(userData);
     }

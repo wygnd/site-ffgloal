@@ -13,7 +13,7 @@ import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 
-@ApiTags('uploads')
+@ApiTags('Uploads')
 @Controller('uploads')
 export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) {
