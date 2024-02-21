@@ -19,6 +19,12 @@ export class PostService {
   async createPost(postDto: CreatePostDto, token: string) {
     const user = this.userService.getUserByToken(token);
     const post = await this.postRepository.create({...postDto, author_id: user.user_id});
+    if (postDto.type === "setting") {
+      const status = await this.statusService.getStatusByValue("Publish");
+      await post.$set("status", status.status_id);
+      post.status = status;
+      return post;
+    }
     const status = await this.statusService.getStatusByValue("Draft");
     await post.$set("status", status.status_id);
     post.status = status;

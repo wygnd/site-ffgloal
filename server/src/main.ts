@@ -12,7 +12,7 @@ async function bootstrap() {
     .setTitle("API FFGlobal")
     .setDescription("Документация по API Backend сайта FFglobal")
     .setVersion("1.0.0")
-    .addServer("http://localhost/7000/api")
+    .addServer("http://localhost/7000/api", "Main server side")
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("/api/docs", app, document);

@@ -3,7 +3,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import {StatusModel} from "../status/status.model";
 import {PostStatusModel} from "./post-status.model";
 import {UserModel} from "../users/user.model";
-import {IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {IsJSON, IsNotEmpty, IsNumber, IsString} from "class-validator";
 import {PageModel} from "../page/page.model";
 import {PostPageModel} from "./post-page.model";
 
@@ -27,7 +27,8 @@ export class PostModel extends Model<PostModel> {
   title: string;
 
   @ApiProperty({example: "Это первая запись...", description: "Контент/описание записи"})
-  @Column({type: DataType.TEXT('long')})
+  @Column({type: DataType.JSONB})
+  @IsJSON()
   content: string;
 
   @ApiProperty({example: "Гланвая страница", description: "Название записи"})
