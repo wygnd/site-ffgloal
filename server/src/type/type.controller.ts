@@ -26,5 +26,6 @@ export class TypeController {
   @Get()
   getTypes() {
     return this.typeService.getTypes();
+    // return [true, false];
   }
 }

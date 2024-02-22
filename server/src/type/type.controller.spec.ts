@@ -1,9 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { TypeController } from './type.controller';
-import { TypeService } from './type.service';
+import {Test, TestingModule} from '@nestjs/testing';
+import {TypeController} from './type.controller';
+import {TypeService} from './type.service';
+import {SequelizeModule} from "@nestjs/sequelize";
+import {TypeModel} from "./type.model";
 
 describe('TypeController', () => {
-  let controller: TypeController;
+  let typeController: TypeController;
+  let typeService: TypeService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -11,10 +14,11 @@ describe('TypeController', () => {
       providers: [TypeService],
     }).compile();
 
-    controller = module.get<TypeController>(TypeController);
+    typeController = module.get<TypeController>(TypeController);
+    typeService = module.get<TypeService>(TypeService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(typeController).toBeDefined();
   });
 });
