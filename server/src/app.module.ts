@@ -44,10 +44,9 @@ import {PageStatusModel} from "./page/page-status.model";
         PageStatusModel
       ],
       synchronize: true,
-      sync: {alter: false, force: false},
+      sync: {alter: true, force: true},
       autoLoadModels: true,
     }),
-    // MongooseModule.forRoot(process.env.DB_MONGO),
     UsersModule,
     RolesModule,
     AuthModule,
