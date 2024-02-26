@@ -11,6 +11,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# END files
+.development.env
+.production.env
+
 # server startic files
 /static
 
