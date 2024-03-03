@@ -1,6 +1,5 @@
-import {BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
+import {Column, DataType, HasOne, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {UploadsTypesModel} from "../uploads/uploads-types.model";
 import {UploadModel} from "../uploads/upload.model";
 
 @Table({tableName: "types", timestamps: false, createdAt: false, updatedAt: false})
@@ -17,6 +16,6 @@ export class TypeModel extends Model<TypeModel> {
   @Column({type: DataType.STRING, defaultValue: ""})
   description: string;
 
-  @BelongsToMany(() => UploadModel, () => UploadsTypesModel)
-  type: UploadModel;
+  @HasOne(() => UploadModel)
+  upload_type: UploadModel;
 }

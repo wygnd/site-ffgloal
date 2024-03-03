@@ -1,20 +1,18 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {UploadModel} from "./upload.model";
 import {UsersService} from "../users/users.service";
-import {v4} from 'uuid';
 import {MulterFileDto} from "./dto/multer-file.dto";
 import {SharpService} from "nestjs-sharp";
 import {join} from "path";
-import {access, mkdir, writeFile} from 'fs/promises';
-import {FileResponse} from "./interface/file-response.interface";
+import {access, mkdir, writeFile, rm} from 'fs/promises';
 import {SizeService} from "../size/size.service";
 import * as crypto from "crypto";
-import * as path from "path";
-import {SizesResponseDto} from "./interface/sizes-response.dto";
-import {CreateFolderPathDto} from "./interface/create-folder-path.dto";
+import {SizesResponseDto} from "./dto/sizes-response.dto";
+import {CreateFolderPathDto} from "./dto/create-folder-path.dto";
 import {TypeService} from "../type/type.service";
 import {CreateSizeDto} from "../size/dto/create-size.dto";
+import {Op} from "sequelize";
 
 @Injectable()
 export class UploadsService {
@@ -25,22 +23,22 @@ export class UploadsService {
               private typeService: TypeService) {
   }
 
+  private uploadFolderImages = join(__dirname, '..', '..', 'static', 'uploads');
+  private uploadFolderOtherFiles = join(__dirname, '..', '..', 'static', "files");
+
   async uploadFiles(files: MulterFileDto[], token: string) {
     const user = this.userService.getUserByToken(token);
     const newFiles = await Promise.all(
       files.map(async file => {
-        const newName = file.originalname;
         const mimetype = file.mimetype;
+        const currentFileName = file.originalname.split('.')[0];
         const currentFileType = file.mimetype.split('/')[1];
-        const type = file.originalname.split('.')[1];
         const size = file.size;
-        // const newName = v4();
-
 
         if (!mimetype.includes('image')) {
           return new MulterFileDto({
             buffer: file.buffer,
-            originalname: `${newName}.${type}`,
+            originalname: `${currentFileName}.${currentFileType}`,
             mimetype,
             size
           })
@@ -49,7 +47,7 @@ export class UploadsService {
         if (currentFileType == 'svg+xml') {
           return new MulterFileDto({
             buffer: file.buffer,
-            originalname: `${newName}.svg`,
+            originalname: `${currentFileName}.svg`,
             mimetype,
             size
           })
@@ -58,7 +56,7 @@ export class UploadsService {
         const buffer = await this.convertToWebP(file.buffer);
         return new MulterFileDto({
           buffer: buffer,
-          originalname: `${newName}.${type}`,
+          originalname: `${currentFileName}.${currentFileType}`,
           mimetype: mimetype,
           size
         })
@@ -68,74 +66,50 @@ export class UploadsService {
     return await this.saveFiles(newFiles, user.user_id);
   }
 
-  async saveFiles(files: MulterFileDto[], user_id: number) {
-    const uploadFolderImages = join(__dirname, '..', '..', 'static', 'uploads');
-    const uploadFolderOtherFiles = join(__dirname, '..', '..', 'static', "files")
-    const uploadFolderSvg = join(__dirname, '..', '..', 'static', 'svg');
-
-
+  private async saveFiles(files: MulterFileDto[], user_id: number) {
     return await Promise.all(
       files.map(async (file) => {
         try {
           const currentFileType = file.mimetype.split('/')[1];
 
-          if (!file.mimetype.includes('image')) {
+          if (!file.mimetype.includes('image') || file.mimetype.includes('svg+xml')) {
             try {
-              await access(uploadFolderOtherFiles);
+              await access(this.uploadFolderOtherFiles);
             } catch (e) {
-              await mkdir(uploadFolderOtherFiles, {recursive: true});
+              await mkdir(this.uploadFolderOtherFiles, {recursive: true});
             }
-            const type = await this.typeService.getTypeByValue("file");
-            await writeFile(join(uploadFolderOtherFiles, file.originalname), file.buffer);
+            const type = await this.typeService.getTypeByValue("other");
+            await writeFile(join(this.uploadFolderOtherFiles, file.originalname), file.buffer);
             const upload = await this.uploadRepository.create({
               author_id: user_id,
               url: `/static/files/${file.originalname}`,
               size: file.size,
-              name: file.originalname
-            })
-            await upload.$set('type', type.type_id)
-
-            return await this.uploadRepository.findByPk(upload.upload_id, {include: {all: true}})
-          }
-
-          if (currentFileType == "svg+xml") {
-            try {
-              await access(uploadFolderSvg);
-            } catch (e) {
-              await mkdir(uploadFolderSvg, {recursive: true});
-            }
-            await writeFile(join(uploadFolderSvg, file.originalname), file.buffer);
-
-            const type = await this.typeService.getTypeByValue("svg");
-            const upload = await this.uploadRepository.create({
-              author_id: user_id,
-              url: `/static/svg/${file.originalname}`,
               name: file.originalname,
-              size: file.size,
+              type_id: type.type_id
             })
-            await upload.$set('type', type.type_id)
+            await upload.$set('type_model', type)
+
             return await this.uploadRepository.findByPk(upload.upload_id, {include: {all: true}})
           }
 
           try {
-            await access(uploadFolderImages);
+            await access(this.uploadFolderImages);
           } catch (e) {
-            await mkdir(uploadFolderImages, {recursive: true});
+            await mkdir(this.uploadFolderImages, {recursive: true});
           }
 
-          const hashed = crypto.createHash('md5').update(file.buffer).digest('base64');
+          const hashed = crypto.createHash('md5').update(file.buffer).digest('base64url').toString();
           const folderPathForImage = this.createFolderPath(hashed);
           const sizes = await this.cropAndConvertToWebP(file.buffer);
-
           try {
-            await access(join(uploadFolderImages, folderPathForImage.path));
+            await access(join(this.uploadFolderImages, folderPathForImage.path));
           } catch (e) {
-            await mkdir(join(uploadFolderImages, folderPathForImage.path), {recursive: true});
+            await mkdir(join(this.uploadFolderImages, folderPathForImage.path), {recursive: true});
           }
-          await writeFile(join(uploadFolderImages, folderPathForImage.path, `${hashed}.webp`), file.buffer);
-          await writeFile(join(uploadFolderImages, folderPathForImage.path, `${hashed}_1024.webp`), sizes.large);
-          await writeFile(join(uploadFolderImages, folderPathForImage.path, `${hashed}_300.webp`), sizes.medium);
-          await writeFile(join(uploadFolderImages, folderPathForImage.path, `${hashed}_150.webp`), sizes.thumbnail);
+          await writeFile(join(this.uploadFolderImages, folderPathForImage.path, `${hashed}.webp`), file.buffer);
+          await writeFile(join(this.uploadFolderImages, folderPathForImage.path, `${hashed}_1024.webp`), sizes.large);
+          await writeFile(join(this.uploadFolderImages, folderPathForImage.path, `${hashed}_300.webp`), sizes.medium);
+          await writeFile(join(this.uploadFolderImages, folderPathForImage.path, `${hashed}_150.webp`), sizes.thumbnail);
 
           const sizes_urls: CreateSizeDto = {
             large: `/static/uploads/${hashed}_1024.webp`,
@@ -149,10 +123,11 @@ export class UploadsService {
             url: `/static/uploads/${hashed}_1024.webp`,
             name: `${hashed}_1024.webp`,
             size: file.size,
-            size_id: createdSizes.size_id
+            size_id: createdSizes.size_id,
+            type_id: type.type_id
           })
-          await upload.$set('type', type.type_id)
-          await upload.$set('size_model', createdSizes.size_id);
+          await upload.$set('type_model', type)
+          await upload.$set('size_model', createdSizes);
 
           return await this.uploadRepository.findByPk(upload.upload_id, {include: {all: true}});
         } catch (e) {
@@ -195,5 +170,59 @@ export class UploadsService {
       first2Letters,
       second2Letters
     }
+  }
+
+  async removeFiles(ids: number[]) {
+    const files = await this.uploadRepository.findAll({
+      where: {
+        upload_id: {
+          [Op.in]: ids,
+        },
+      },
+      include: {all: true}
+    })
+
+    if (files.length === 0 || !files) {
+      throw new HttpException(`Файлов не найдено`, HttpStatus.NOT_FOUND);
+    }
+    const isRemoveFromFolder: boolean[] = await this.removeFilesFromFolder(files);
+
+    if (isRemoveFromFolder.includes(false)) {
+      throw new HttpException('Что-то пошло не так', HttpStatus.BAD_REQUEST);
+    }
+
+    return true;
+  }
+
+
+  private async removeFilesFromFolder(files: UploadModel[]): Promise<boolean[]> {
+    return await Promise.all(files.map(async (file): Promise<boolean> => {
+        try {
+          const fileType = file.type_model.value;
+          const fileName = file.name.split('.')[0];
+          const filePath = this.createFolderPath(fileName);
+          await access(this.uploadFolderOtherFiles);
+
+          if (fileType !== "image") {
+            try {
+              await rm(join(this.uploadFolderOtherFiles, file.name));
+              await file.destroy();
+              return true
+            } catch (e) {
+              console.log(e);
+              return false;
+            }
+          }
+
+          await rm(join(this.uploadFolderImages, filePath.path))
+          await file.destroy();
+          return true;
+        } catch
+          (e) {
+          console.log(e);
+          throw new InternalServerErrorException("Ошибка при удалении файла");
+        }
+      }
+    ))
   }
 }

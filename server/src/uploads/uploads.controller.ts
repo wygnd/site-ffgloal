@@ -1,5 +1,6 @@
 import {
-  Controller, Headers,
+  Body,
+  Controller, Delete, Headers,
   HttpStatus,
   ParseFilePipeBuilder,
   Post, UploadedFiles, UseGuards,
@@ -31,5 +32,12 @@ export class UploadsController {
       .build({errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY}),
   ) files: Express.Multer.File[], @Headers('Authorization') token: string) {
     return await this.uploadsService.uploadFiles(files, token);
+  }
+
+  @ApiOperation({summary: "Удаление файлов"})
+  @ApiResponse({status: 200})
+  @Delete('/remove')
+  async removeFiles(@Body('ids') ids: number[]) {
+    return this.uploadsService.removeFiles(ids);
   }
 }

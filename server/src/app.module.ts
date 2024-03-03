@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
 import {ConfigModule} from "@nestjs/config";
 import {SequelizeModule} from "@nestjs/sequelize";
-import {MongooseModule} from "@nestjs/mongoose";
 import {UsersModule} from './users/users.module';
 import {RolesModule} from './roles/roles.module';
 import {UserModel} from "./users/user.model";
@@ -20,7 +19,6 @@ import {join} from "path";
 import {SizeModule} from './size/size.module';
 import {TypeModule} from './type/type.module';
 import {TypeModel} from "./type/type.model";
-import {UploadsTypesModel} from "./uploads/uploads-types.model";
 import {SizeModel} from "./size/size.model";
 import {PageModule} from './page/page.module';
 import {PostPageModel} from "./post/post-page.model";
@@ -40,11 +38,11 @@ import {PageStatusModel} from "./page/page-status.model";
       password: process.env.DB_PASSWORD_PG,
       database: process.env.DB_DATABASE_PG,
       models: [
-        UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, UploadsTypesModel, SizeModel, PageModel, PostPageModel,
+        UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, SizeModel, PageModel, PostPageModel,
         PageStatusModel
       ],
       synchronize: true,
-      sync: {alter: true, force: true},
+      sync: {alter: false, force: false},
       autoLoadModels: true,
     }),
     UsersModule,

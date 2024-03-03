@@ -7,14 +7,13 @@ import {UsersModule} from "../users/users.module";
 import {SharpModule} from "nestjs-sharp";
 import {SizeModule} from "../size/size.module";
 import {TypeModel} from "../type/type.model";
-import {UploadsTypesModel} from "./uploads-types.model";
 import {TypeModule} from "../type/type.module";
 import {SizeModel} from "../size/size.model";
 
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([UploadModel, TypeModel, UploadsTypesModel, SizeModel]),
+    SequelizeModule.forFeature([UploadModel, TypeModel, SizeModel]),
     UsersModule,
     SharpModule,
     SizeModule,

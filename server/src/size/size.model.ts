@@ -1,6 +1,5 @@
 import {Column, DataType, HasOne, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {UploadsTypesModel} from "../uploads/uploads-types.model";
 import {UploadModel} from "../uploads/upload.model";
 
 @Table({tableName: "sizes", timestamps: false, updatedAt: false, createdAt: false})

@@ -21,13 +21,13 @@ export class AuthService {
     }
 
     async signUp(user: CreateUserDto) {
-        const candidate = await this.userService.getUserByEmail(user.email);
-        if (candidate) {
-            throw new HttpException(`Пользователь с такой почтой ${user.email} уже существует`, HttpStatus.BAD_REQUEST);
-        }
-        const hashPassword = await bcrypt.hash(user.password, 5);
-        const userData = await this.userService.createUser({...user, password: hashPassword});
-        return this.generateToken(userData);
+            const candidate = await this.userService.getUserByEmail(user.email);
+            if (candidate) {
+                throw new HttpException(`Пользователь с такой почтой ${user.email} уже существует`, HttpStatus.BAD_REQUEST);
+            }
+            const hashPassword = await bcrypt.hash(user.password, 5);
+            const userData = await this.userService.createUser({...user, password: hashPassword});
+            return this.generateToken(userData);
     }
 
     private async generateToken(user: UserModel) {
