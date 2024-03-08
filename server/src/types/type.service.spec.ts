@@ -30,7 +30,7 @@ describe('TypeService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of types', async () => {
+    it('should return an array of responses', async () => {
       jest.spyOn(service, 'getTypes').mockImplementation(async (): Promise<TypeInterface> => result);
 
       expect(await controller.getTypes()).toBe(result);

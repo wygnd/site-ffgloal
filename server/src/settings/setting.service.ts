@@ -3,6 +3,7 @@ import {InjectModel} from "@nestjs/sequelize";
 import {SettingModel} from "./Setting.model";
 import {CreateSettingDto} from "./dto/create-setting.dto";
 import {ChangeSettingDto} from "./dto/change-setting.dto";
+import {SettingRemoveResponse} from "./responses/setting-remove-response.type";
 
 @Injectable()
 export class SettingService {
@@ -46,7 +47,7 @@ export class SettingService {
     return await this.settingRepository.findAll();
   }
 
-  async removeSettings(setting_id: number) {
+  async removeSettings(setting_id: number): Promise<SettingRemoveResponse> {
     const candidateSetting = await this.settingRepository.findByPk(setting_id);
 
     if (!candidateSetting) {
@@ -54,6 +55,10 @@ export class SettingService {
     }
 
     await candidateSetting.destroy();
-    return true;
+
+    return {
+      message: "Поле успешно удалено",
+      statusCode: 200
+    };
   }
 }
