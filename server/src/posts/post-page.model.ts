@@ -1,6 +1,6 @@
 import {Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {PostModel} from "./post.model";
-import {PageModel} from "../page/page.model";
+import {PageModel} from "../pages/page.model";
 
 @Table({tableName: "post_page", updatedAt: false, timestamps: false, createdAt: false})
 export class PostPageModel extends Model<PostPageModel> {

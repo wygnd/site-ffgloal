@@ -7,7 +7,7 @@ import {PostStatusModel} from "./post-status.model";
 import {StatusModel} from "../status/status.model";
 import {StatusModule} from "../status/status.module";
 import {UsersModule} from "../users/users.module";
-import {PageModel} from "../page/page.model";
+import {PageModel} from "../pages/page.model";
 import {PostPageModel} from "./post-page.model";
 
 @Module({

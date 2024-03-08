@@ -4,7 +4,7 @@ import {StatusModel} from "../status/status.model";
 import {PostStatusModel} from "./post-status.model";
 import {UserModel} from "../users/user.model";
 import {IsJSON, IsNotEmpty, IsNumber, IsString} from "class-validator";
-import {PageModel} from "../page/page.model";
+import {PageModel} from "../pages/page.model";
 import {PostPageModel} from "./post-page.model";
 
 @Table({tableName: "posts", updatedAt: false})

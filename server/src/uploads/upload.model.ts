@@ -1,8 +1,8 @@
 import {BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {PostModel} from "../post/post.model";
-import {TypeModel} from "../type/type.model";
-import {SizeModel} from "../size/size.model";
+import {PostModel} from "../posts/post.model";
+import {TypeModel} from "../types/type.model";
+import {SizeModel} from "../sizes/size.model";
 
 @Table({tableName: "uploads", updatedAt: false})
 export class UploadModel extends Model<UploadModel> {

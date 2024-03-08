@@ -6,12 +6,12 @@ import {MulterFileDto} from "./dto/multer-file.dto";
 import {SharpService} from "nestjs-sharp";
 import {join} from "path";
 import {access, mkdir, writeFile, rm} from 'fs/promises';
-import {SizeService} from "../size/size.service";
+import {SizeService} from "../sizes/size.service";
 import * as crypto from "crypto";
 import {SizesResponseDto} from "./dto/sizes-response.dto";
 import {CreateFolderPathDto} from "./dto/create-folder-path.dto";
-import {TypeService} from "../type/type.service";
-import {CreateSizeDto} from "../size/dto/create-size.dto";
+import {TypeService} from "../types/type.service";
+import {CreateSizeDto} from "../sizes/dto/create-size.dto";
 import {Op} from "sequelize";
 
 @Injectable()

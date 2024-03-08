@@ -7,23 +7,25 @@ import {UserModel} from "./users/user.model";
 import {RolesModel} from "./roles/roles.model";
 import {UserRolesModel} from "./roles/user-roles.model";
 import {AuthModule} from './auth/auth.module';
-import {PostModule} from './post/post.module';
-import {PostModel} from "./post/post.model";
+import {PostModule} from './posts/post.module';
+import {PostModel} from "./posts/post.model";
 import {StatusModule} from './status/status.module';
 import {StatusModel} from "./status/status.model";
-import {PostStatusModel} from "./post/post-status.model";
+import {PostStatusModel} from "./posts/post-status.model";
 import {UploadsModule} from './uploads/uploads.module';
 import {UploadModel} from "./uploads/upload.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from "path";
-import {SizeModule} from './size/size.module';
-import {TypeModule} from './type/type.module';
-import {TypeModel} from "./type/type.model";
-import {SizeModel} from "./size/size.model";
-import {PageModule} from './page/page.module';
-import {PostPageModel} from "./post/post-page.model";
-import {PageModel} from "./page/page.model";
-import {PageStatusModel} from "./page/page-status.model";
+import {SizeModule} from './sizes/size.module';
+import {TypeModule} from './types/type.module';
+import {TypeModel} from "./types/type.model";
+import {SizeModel} from "./sizes/size.model";
+import {PageModule} from './pages/page.module';
+import {PostPageModel} from "./posts/post-page.model";
+import {PageModel} from "./pages/page.model";
+import {PageStatusModel} from "./pages/page-status.model";
+import { SettingModule } from './settings/setting.module';
+import {SettingModel} from "./settings/Setting.model";
 
 @Module({
   imports: [
@@ -39,7 +41,7 @@ import {PageStatusModel} from "./page/page-status.model";
       database: process.env.DB_DATABASE_PG,
       models: [
         UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, SizeModel, PageModel, PostPageModel,
-        PageStatusModel
+        PageStatusModel, SettingModel
       ],
       synchronize: true,
       sync: {alter: false, force: false},
@@ -57,7 +59,8 @@ import {PageStatusModel} from "./page/page-status.model";
     }),
     SizeModule,
     TypeModule,
-    PageModule
+    PageModule,
+    SettingModule
   ],
   controllers: [],
   providers: [],

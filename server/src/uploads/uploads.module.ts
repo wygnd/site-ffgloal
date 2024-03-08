@@ -5,10 +5,10 @@ import {SequelizeModule} from "@nestjs/sequelize";
 import {UploadModel} from "./upload.model";
 import {UsersModule} from "../users/users.module";
 import {SharpModule} from "nestjs-sharp";
-import {SizeModule} from "../size/size.module";
-import {TypeModel} from "../type/type.model";
-import {TypeModule} from "../type/type.module";
-import {SizeModel} from "../size/size.model";
+import {SizeModule} from "../sizes/size.module";
+import {TypeModel} from "../types/type.model";
+import {TypeModule} from "../types/type.module";
+import {SizeModel} from "../sizes/size.model";
 
 
 @Module({

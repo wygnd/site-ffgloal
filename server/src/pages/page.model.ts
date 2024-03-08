@@ -1,6 +1,6 @@
 import {BelongsTo, BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
-import {PostModel} from "../post/post.model";
-import {PostPageModel} from "../post/post-page.model";
+import {PostModel} from "../posts/post.model";
+import {PostPageModel} from "../posts/post-page.model";
 import {ApiProperty} from "@nestjs/swagger";
 import {StatusModel} from "../status/status.model";
 import {PageStatusModel} from "./page-status.model";

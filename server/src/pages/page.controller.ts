@@ -4,7 +4,7 @@ import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {PageModel} from "./page.model";
 import {CreatePageDto} from "./dto/create-page.dto";
 import {ChangePageDto} from "./dto/change-page.dto";
-import {PostModel} from "../post/post.model";
+import {PostModel} from "../posts/post.model";
 import {ChangePageStatusDto} from "./dto/change-page-status.dto";
 
 @ApiTags("Pages")

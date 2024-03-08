@@ -1,9 +1,9 @@
 import {BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {PostModel} from "../post/post.model";
-import {PostStatusModel} from "../post/post-status.model";
-import {PageModel} from "../page/page.model";
-import {PageStatusModel} from "../page/page-status.model";
+import {PostModel} from "../posts/post.model";
+import {PostStatusModel} from "../posts/post-status.model";
+import {PageModel} from "../pages/page.model";
+import {PageStatusModel} from "../pages/page-status.model";
 
 @Table({tableName: "status", timestamps: false, updatedAt: false, createdAt: false})
 export class StatusModel extends Model<StatusModel> {
