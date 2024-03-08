@@ -38,10 +38,20 @@ export class UploadModel extends Model<UploadModel> {
   @Column({type: DataType.INTEGER, allowNull: false})
   size: number;
 
+  @ApiProperty({
+    example: 1,
+    description: "Внешний ключ для связи с таблицой типов файлов",
+    required: true
+  })
   @ForeignKey(() => TypeModel)
   @Column({type: DataType.INTEGER, allowNull: false})
   type_id: number;
 
+  @ApiProperty({
+    example: 1,
+    description: "Внешний ключ для связи с таблицой размеров изображений",
+    required: true
+  })
   @ForeignKey(() => SizeModel)
   @Column({type: DataType.INTEGER, defaultValue: null})
   size_id: number;
