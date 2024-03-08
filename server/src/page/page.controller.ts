@@ -8,7 +8,7 @@ import {PostModel} from "../post/post.model";
 import {ChangePageStatusDto} from "./dto/change-page-status.dto";
 
 @ApiTags("Pages")
-@Controller('page')
+@Controller('pages')
 export class PageController {
   constructor(private readonly pageService: PageService) {
   }
