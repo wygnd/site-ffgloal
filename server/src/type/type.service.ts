@@ -55,4 +55,8 @@ export class TypeService {
 
     return {message: "Запись успешно удалена", status: HttpStatus.OK}
   }
+
+  async getTypeById(type_id: number) {
+    return await this.typeRepository.findByPk(type_id);
+  }
 }

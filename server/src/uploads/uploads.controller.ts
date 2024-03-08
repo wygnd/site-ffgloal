@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller, Delete, Headers,
+  Controller, Delete, Get, Headers,
   HttpStatus,
   ParseFilePipeBuilder,
   Post, UploadedFiles, UseGuards,
@@ -39,5 +39,12 @@ export class UploadsController {
   @Delete('/remove')
   async removeFiles(@Body('ids') ids: number[]) {
     return this.uploadsService.removeFiles(ids);
+  }
+
+  @ApiOperation({summary: "Получение файлов (всех или по определенному типу)"})
+  @ApiResponse({type: [UploadModel], status: 200})
+  @Get()
+  async getUploads(@Body('type_id') type_id: number) {
+    return this.uploadsService.getFiles(type_id);
   }
 }

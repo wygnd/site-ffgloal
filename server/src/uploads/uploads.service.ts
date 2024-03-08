@@ -225,4 +225,15 @@ export class UploadsService {
       }
     ))
   }
+
+  async getFiles(type_id: number = 0) {
+    let files: UploadModel[];
+    if (type_id === 0) {
+      files = await this.uploadRepository.findAll({include: {all: true}});
+      return files;
+    }
+
+    files = await this.uploadRepository.findAll({where: {type_id}, include: {all: true}});
+    return files;
+  }
 }
