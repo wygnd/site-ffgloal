@@ -5,6 +5,7 @@ import {CreatePageDto} from "./dto/create-page.dto";
 import {StatusService} from "../status/status.service";
 import {ChangePageDto} from "./dto/change-page.dto";
 import {ChangePageStatusDto} from "./dto/change-page-status.dto";
+import {SettingRemoveResponse} from "../settings/responses/setting-remove-response.type";
 
 @Injectable()
 export class PageService {
@@ -67,7 +68,7 @@ export class PageService {
     return await page.$set('status', status.status_id);
   }
 
-  async deletePage(page_id: number) {
+  async deletePage(page_id: number): Promise<SettingRemoveResponse> {
     try {
       const page = await this.pageRepository.findByPk(page_id, {include: {all: true}});
 
@@ -78,6 +79,10 @@ export class PageService {
       await page.$remove('status', page.status.status_id);
       await page.$remove('posts', page.posts);
       await page.destroy();
+      return {
+        message: "Страница успешно удалена",
+        statusCode: 200
+      }
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }

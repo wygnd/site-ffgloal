@@ -11,7 +11,7 @@ import {PageStatusModel} from "./page-status.model";
 @Module({
   imports: [
     SequelizeModule.forFeature([PageModel, PostPageModel, StatusModel, PageStatusModel]),
-    StatusModule
+    StatusModule,
   ],
   controllers: [PageController],
   providers: [PageService],

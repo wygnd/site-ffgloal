@@ -49,7 +49,6 @@ export class PageController {
   }
 
   @ApiOperation({summary: "Удаление страницы по ID"})
-  @ApiResponse({status: 200})
   @Delete('/:page_id')
   deletePage(@Param('page_id') page_id: number) {
   return this.pageService.deletePage(page_id);

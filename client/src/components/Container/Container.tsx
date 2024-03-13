@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import styles from './Container.module.scss';
+// import styles from './Container.module.scss';
 
 interface IContainer {
     width: string
@@ -8,9 +8,10 @@ interface IContainer {
 
 const Container: FC<IContainer> = ({width, children}) => {
     return (
-        <div style={{maxWidth: width}} className={styles.container}>
-            {children}
-        </div>
+        // <div style={{maxWidth: width}} className={styles.container}>
+        //     {children}
+        // </div>
+      <></>
     );
 };
 

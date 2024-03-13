@@ -1,13 +1,13 @@
 import React from 'react';
-import Header from "./components/Header/Header";
-import DevPage from './pages/dev/DevPage';
 import './styles/main.scss'
 
 
 const App = () => (
-    <>
-        <DevPage />
-    </>
+  <>
+    <div>
+      Hello world
+    </div>
+  </>
 );
 
 export default App;
