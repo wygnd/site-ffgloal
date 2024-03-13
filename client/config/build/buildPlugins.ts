@@ -1,5 +1,5 @@
-import webpack, {Configuration, DefinePlugin} from 'webpack';
-import {BuildOptions} from "./types/types";
+import webpack, {Configuration} from 'webpack';
+import {BuildOptions, environmentsVariable} from "./types/types";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
@@ -7,19 +7,22 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import path from "path";
 import CopyPlugin from "copy-webpack-plugin";
+import Dotenv from 'dotenv-webpack';
 
-export function buildPlugins({mode, paths, platform, analyzer}: BuildOptions): Configuration['plugins'] {
+export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
 
-  const isDev = mode === "development";
-  const isProd = mode === "production";
+  const isDev = options.mode === "development";
+  const isProd = options.mode === "production";
+  const envFileName: environmentsVariable = isDev ? ".development.env" : ".production.env";
+
   let plugins: Configuration['plugins'] = [
     new HtmlWebpackPlugin({
-      template: paths.html,
-      favicon: path.resolve(paths.public, 'favicon.ico')
+      template: options.paths.html,
+      favicon: path.resolve(options.paths.public, 'favicon.ico')
     }),
-    // new DefinePlugin({
-    //   __PLATFORM__: JSON.stringify(platform),
-    // }),
+    new Dotenv({
+      path: envFileName ?? ".development.env.development",
+    }),
   ];
 
   if (isDev) {
@@ -36,7 +39,6 @@ export function buildPlugins({mode, paths, platform, analyzer}: BuildOptions): C
       chunkFilename: 'css/[name].[contenthash:8].css'
     }))
 
-
     // Copy static files if you need
     // plugins.push(new CopyPlugin({
     //   patterns: [
@@ -44,7 +46,7 @@ export function buildPlugins({mode, paths, platform, analyzer}: BuildOptions): C
     //   ],
     // }),)
 
-    if (analyzer) {
+    if (options.analyzer) {
       plugins.push(new BundleAnalyzerPlugin())
     }
   }

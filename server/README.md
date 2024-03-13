@@ -35,7 +35,7 @@ $ yarn install
 ## Running the app
 
 ```bash
-# development
+# admin
 $ yarn run start
 
 # watch mode
