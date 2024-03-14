@@ -7,6 +7,7 @@ const Layout = () => {
     <>
       <Header />
       <Outlet/>
+      <hr/>
       <footer>Sup, this footer</footer>
     </>
   );

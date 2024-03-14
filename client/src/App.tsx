@@ -3,10 +3,12 @@ import 'styles/main.scss';
 import {Outlet} from "react-router-dom";
 
 const App = () => {
+
+
   return (
     <main>
-     <h1>Hello, world</h1>
-      <Outlet />
+      <h1>Hello, world</h1>
+      <Outlet/>
     </main>
   );
 };

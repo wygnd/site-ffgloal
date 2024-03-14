@@ -14,12 +14,16 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
       test: /\.(woff|woff2|eot|ttf|otf)$/i,
       type: 'asset/resource',
     },
-
     /* IMAGES */
     {
       test: /\.(png|jpg|jpeg|gif)$/i,
       type: 'asset/resource',
-    }
+    },
+    /* GIFS */
+    {
+      test: /\.gif$/,
+      type: 'asset/inline',
+    },
   ];
 
   const svgLoader = {

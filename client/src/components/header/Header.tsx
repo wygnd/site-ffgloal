@@ -7,7 +7,6 @@ const Header = () => {
   return (
     <header>
       This header
-      <h4>{process.env.SERVER_API}</h4>
       <hr/>
     </header>
   );
