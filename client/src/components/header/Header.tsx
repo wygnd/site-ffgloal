@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "@/components/navbar/Navbar";
 
 const Header = () => {
 
@@ -7,6 +8,7 @@ const Header = () => {
   return (
     <header>
       This header
+      <Navbar />
       <hr/>
     </header>
   );

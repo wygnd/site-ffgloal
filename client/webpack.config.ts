@@ -9,7 +9,7 @@ export default ({mode, port, analyzer, platform}: EnvVariables) => {
     port: port ?? 3000,
     mode: mode ?? "development",
     paths: {
-      entry: path.resolve(__dirname, 'src', 'index.tsx'),
+      entry: path.resolve(__dirname, 'index.tsx'),
       html: path.resolve(__dirname, 'public', 'index.html'),
       output: path.resolve(__dirname, 'build'),
       src: path.resolve(__dirname, 'src'),

@@ -35,7 +35,7 @@ $ yarn install
 ## Running the app
 
 ```bash
-# admin
+# adminPage
 $ yarn run start
 
 # watch mode
