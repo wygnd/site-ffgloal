@@ -24,7 +24,7 @@ import {PageModule} from './pages/page.module';
 import {PostPageModel} from "./posts/post-page.model";
 import {PageModel} from "./pages/page.model";
 import {PageStatusModel} from "./pages/page-status.model";
-import { SettingModule } from './settings/setting.module';
+import {SettingModule} from './settings/setting.module';
 import {SettingModel} from "./settings/Setting.model";
 
 @Module({
@@ -44,7 +44,10 @@ import {SettingModel} from "./settings/Setting.model";
         PageStatusModel, SettingModel
       ],
       synchronize: true,
-      sync: {alter: false, force: false},
+      sync: {
+        alter: false,
+        force: false
+      },
       autoLoadModels: true,
     }),
     UsersModule,

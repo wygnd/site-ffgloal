@@ -1,15 +1,12 @@
-import React, {FC} from 'react';
-import Header from "../Header/Header";
+import React from 'react';
+import Navbar from "@/components/navbar/Navbar";
+import {Outlet} from "react-router-dom";
 
-type TLayout = {
-  children: React.ReactNode
-}
-
-const Layout: FC<TLayout> = ({children}) => {
+const Layout = () => {
   return (
     <>
-      <Header/>
-      {children}
+      <Navbar/>
+      <Outlet />
     </>
   )
     ;
