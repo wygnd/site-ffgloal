@@ -7,6 +7,7 @@ import {JwtService} from "@nestjs/jwt";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
 import {ChangePostDto} from "./dto/change-post.dto";
 import {UsersService} from "../users/users.service";
+import {GetPostDto} from "./dto/get-post.dto";
 
 @Injectable()
 export class PostService {
@@ -85,5 +86,19 @@ export class PostService {
       type: post.type,
       menu_order: post.menu_order
     }, token);
+  }
+
+  async getPostsWithArgs(args: GetPostDto) {
+    console.log(args.number_posts);
+    // return await this.postRepository.findAll({
+    //   where: {
+    //     type: args.post_type,
+    //   },
+    //   order: [
+    //     [args.orderby, args.order]
+    //   ],
+    //   limit: args.number_posts,
+    //   offset: args.offset
+    // })
   }
 }

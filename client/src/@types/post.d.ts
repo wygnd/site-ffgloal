@@ -7,3 +7,8 @@ export interface IPost {
   menu_order: number;
   type: string;
 }
+
+export interface IPostArgs {
+  number_posts: number;
+  post_type: string;
+}

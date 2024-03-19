@@ -9,7 +9,6 @@ export function buildBabelLoader(options: BuildOptions) {
   let buildBabelPlugins: PluginItem[] = [];
 
   if (isDev) {
-
   } else {
     buildBabelPlugins.push(
       [
@@ -18,7 +17,7 @@ export function buildBabelLoader(options: BuildOptions) {
           props: ["data-testId"]
         }
       ]
-    )
+    );
   }
 
   return {
@@ -28,7 +27,11 @@ export function buildBabelLoader(options: BuildOptions) {
       loader: "babel-loader",
       options: {
         presets: [
-          "@babel/preset-react",
+          "@babel/preset-env",
+          "@babel/preset-typescript",
+          ["@babel/preset-react", {
+            runtime: isDev ? "automatic" : "classic"
+          }]
         ],
         plugins: buildBabelPlugins,
       }

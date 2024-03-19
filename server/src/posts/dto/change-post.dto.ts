@@ -1,6 +1,5 @@
 import {IsNotEmpty} from "class-validator";
-import {ApiExtension, ApiProperty} from "@nestjs/swagger";
-import {PostModel} from "../post.model";
+import {ApiProperty} from "@nestjs/swagger";
 
 export class ChangePostDto {
   @ApiProperty({example: 1, description: "Уникальный идентификатор записи", required: true})
