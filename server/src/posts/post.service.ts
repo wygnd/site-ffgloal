@@ -88,17 +88,22 @@ export class PostService {
     }, token);
   }
 
-  async getPostsWithArgs(args: GetPostDto) {
-    console.log(args.number_posts);
-    // return await this.postRepository.findAll({
-    //   where: {
-    //     type: args.post_type,
-    //   },
-    //   order: [
-    //     [args.orderby, args.order]
-    //   ],
-    //   limit: args.number_posts,
-    //   offset: args.offset
-    // })
+  async getPostsWithArgs({post_type, order, orderby, number_posts, paged}: GetPostDto) {
+    try {
+      const offset: number = paged * number_posts - number_posts;
+
+      return await this.postRepository.findAll({
+        where: {
+          type: post_type,
+        },
+        order: [
+          [orderby || "post_id", order || "ASC"]
+        ],
+        limit: number_posts,
+        offset: offset
+      })
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.FORBIDDEN);
+    }
   }
 }

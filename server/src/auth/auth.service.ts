@@ -33,6 +33,11 @@ export class AuthService {
 
   private async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
+
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+
     const passIsCorrect = await bcrypt.compare(userDto.password, user.password);
     if (user && passIsCorrect) {
       return user;

@@ -31,6 +31,7 @@ export class PostController {
   }
 
   @ApiOperation({summary: "Получить записи с определенными параметрами"})
+  @ApiResponse({status: 200, type: [PostModel]})
   @Post()
   getPosts(@Body() args: GetPostDto) {
     return this.postService.getPostsWithArgs(args);

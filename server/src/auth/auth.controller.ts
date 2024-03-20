@@ -20,7 +20,7 @@ export class AuthController {
   @ApiOperation({summary: "Регистрация пользователя", deprecated: true})
   @ApiResponse({status: 200, type: UserModel})
   @Post('/signup')
-  async singUp() {
+  async singUp(@Body() user: CreateUserDto) {
     return new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 }

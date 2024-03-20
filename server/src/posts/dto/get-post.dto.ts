@@ -1,29 +1,29 @@
 import {IsEnum, IsNotEmpty, IsNumber, IsString} from "class-validator";
 import {DefaultValuePipe} from "@nestjs/common";
+import {ApiProperty} from "@nestjs/swagger";
+import {Order, OrderBy} from "../utils/enums";
 
 export class GetPostDto {
 
+  @ApiProperty({example: "page", description: "Тип записи", required: true})
   @IsNotEmpty()
   @IsString()
   readonly post_type: string;
 
+  @ApiProperty({example: 10, description: "Количество постов", required: true})
   @IsNotEmpty()
   @IsNumber()
-  readonly number_posts: number = -1;
+  readonly number_posts: number;
 
+  @ApiProperty({example: 1, description: "Страница", required: true, default: 0})
   @IsNumber()
-  readonly offset: number = 0;
+  readonly paged: number;
 
-  @IsEnum({
-    id: "id",
-    title: "title",
-    menu_order: "menu_order"
-  })
-  readonly orderby?: "id" | "title" | "menu_order" = "id";
+  @ApiProperty({example: "post_id", description: "Сотрировка по", required: false, default: "post_id", enum: OrderBy})
+  @IsEnum(OrderBy)
+  readonly orderby?: OrderBy;
 
-  @IsEnum({
-    asc: "ASC",
-    desc: "DESC"
-  })
-  readonly order?: "ASC" | "DESC" = "ASC";
+  @ApiProperty({example: "ASC", description: "Сортировка", required: false, default: "ASC", enum: Order})
+  @IsEnum(Order)
+  readonly order?: Order;
 }

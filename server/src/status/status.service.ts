@@ -22,7 +22,13 @@ export class StatusService {
   }
 
   async getStatusByValue(value: string) {
-    return this.statusRepository.findOne({where: {value}});
+    const status = this.statusRepository.findOne({where: {value}})
+
+    if (!status) {
+      throw new HttpException('Записи не существует', HttpStatus.NOT_FOUND);
+    }
+
+    return status;
   }
 
   async getStatusById(status_id: string) {

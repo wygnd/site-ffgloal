@@ -8,7 +8,6 @@ export class CreatePostDto {
   readonly title: string;
 
   @ApiProperty({example: "Это главная страница...", description: "Описание записи"})
-  @IsNotEmpty()
   @IsJSON()
   readonly content: string;
 
