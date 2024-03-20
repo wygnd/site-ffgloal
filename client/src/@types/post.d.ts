@@ -8,7 +8,16 @@ export interface IPost {
   type: string;
 }
 
-export interface IPostArgs {
-  number_posts: number;
+export interface IPostsRequest {
   post_type: string;
+  number_posts: number;
+  paged: number;
+  orderBy?: "post_id" | "title" | "menu_order";
+  order?: "ASC" | "DESC";
+  status?: "Publish" | "Draft" | "Hidden";
+}
+
+export interface IPostRequest {
+  post_id: number;
+  attributes?: string[]
 }

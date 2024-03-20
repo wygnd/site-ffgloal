@@ -1,29 +1,16 @@
-import {IsEnum, IsNotEmpty, IsNumber, IsString} from "class-validator";
-import {DefaultValuePipe} from "@nestjs/common";
 import {ApiProperty} from "@nestjs/swagger";
-import {Order, OrderBy} from "../utils/enums";
+import {IsNotEmpty, IsNumber} from "class-validator";
 
 export class GetPostDto {
-
-  @ApiProperty({example: "page", description: "Тип записи", required: true})
-  @IsNotEmpty()
-  @IsString()
-  readonly post_type: string;
-
-  @ApiProperty({example: 10, description: "Количество постов", required: true})
+  @ApiProperty({example: 1, description: "ID записи", required: true})
   @IsNotEmpty()
   @IsNumber()
-  readonly number_posts: number;
+  readonly post_id: string;
 
-  @ApiProperty({example: 1, description: "Страница", required: true, default: 0})
-  @IsNumber()
-  readonly paged: number;
-
-  @ApiProperty({example: "post_id", description: "Сотрировка по", required: false, default: "post_id", enum: OrderBy})
-  @IsEnum(OrderBy)
-  readonly orderby?: OrderBy;
-
-  @ApiProperty({example: "ASC", description: "Сортировка", required: false, default: "ASC", enum: Order})
-  @IsEnum(Order)
-  readonly order?: Order;
+  @ApiProperty({
+    example: ["post_id", "title", "content"],
+    description: "Атрибуты поста, которые нужно вывести, по дефолту выводятся все",
+    required: false
+  })
+  readonly attributes?: string[];
 }

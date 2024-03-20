@@ -7,6 +7,9 @@ import {JwtService} from "@nestjs/jwt";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
 import {ChangePostDto} from "./dto/change-post.dto";
 import {UsersService} from "../users/users.service";
+import {GetPostsDto} from "./dto/get-posts.dto";
+import {Op} from "sequelize";
+import {StatusModel} from "../status/status.model";
 import {GetPostDto} from "./dto/get-post.dto";
 
 @Injectable()
@@ -88,7 +91,7 @@ export class PostService {
     }, token);
   }
 
-  async getPostsWithArgs({post_type, order, orderby, number_posts, paged}: GetPostDto) {
+  async getPostsWithArgs({post_type, order, orderBy, number_posts, paged}: GetPostsDto) {
     try {
       const offset: number = paged * number_posts - number_posts;
 
@@ -96,8 +99,13 @@ export class PostService {
         where: {
           type: post_type,
         },
+        include: [
+          {
+            model: StatusModel,
+          }
+        ],
         order: [
-          [orderby || "post_id", order || "ASC"]
+          [orderBy || "post_id", order || "ASC"]
         ],
         limit: number_posts,
         offset: offset
@@ -105,5 +113,17 @@ export class PostService {
     } catch (e) {
       throw new HttpException(e, HttpStatus.FORBIDDEN);
     }
+  }
+
+  async getPost(args: GetPostDto) {
+    const post = await this.postRepository.findByPk(args.post_id, {
+      attributes: args.attributes
+    });
+
+    if (!post) {
+      throw new HttpException('Записи не найдено', HttpStatus.NOT_FOUND);
+    }
+
+    return post;
   }
 }

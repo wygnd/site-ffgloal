@@ -2,7 +2,7 @@ import axios, {AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {AxiosError} from "axios";
 
 const $api = axios.create({
-  baseURL: 'https://ffglobal.ru/api',
+  baseURL: 'http://localhost:7000/api',
   withCredentials: true
 })
 

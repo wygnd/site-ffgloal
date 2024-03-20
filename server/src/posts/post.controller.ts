@@ -8,6 +8,7 @@ import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 import {ChangePostStatusDto} from "./dto/change-post-status.dto";
 import {ChangePostDto} from "./dto/change-post.dto";
+import {GetPostsDto} from "./dto/get-posts.dto";
 import {GetPostDto} from "./dto/get-post.dto";
 
 @ApiTags('Posts')
@@ -33,8 +34,13 @@ export class PostController {
   @ApiOperation({summary: "Получить записи с определенными параметрами"})
   @ApiResponse({status: 200, type: [PostModel]})
   @Post()
-  getPosts(@Body() args: GetPostDto) {
+  getPosts(@Body() args: GetPostsDto) {
     return this.postService.getPostsWithArgs(args);
+  }
+
+  @Post('/post')
+  getPost(@Body() args: GetPostDto) {
+    return this.postService.getPost(args);
   }
 
   @ApiOperation({summary: "Удаление записи"})
