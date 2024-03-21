@@ -6,6 +6,7 @@ import {RolesService} from "../roles/roles.service";
 import {RolesModel} from "../roles/roles.model";
 import {JwtService} from "@nestjs/jwt";
 import {IUser} from "./interface/user.interface";
+import {UserRolesModel} from "../roles/user-roles.model";
 
 @Injectable()
 export class UsersService {
@@ -31,8 +32,13 @@ export class UsersService {
     return this.userRepository.findAll({include: [RolesModel]});
   }
 
-  async getUserByEmail(email: string){
-    return this.userRepository.findOne({where: {email}, include: [RolesModel]})
+  async getUserByEmail(email: string) {
+    return this.userRepository.findOne({
+      where: {
+        email
+      },
+      include: [RolesModel]
+    })
   }
 
   getUserByToken(token: string): IUser {

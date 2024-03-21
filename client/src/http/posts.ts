@@ -9,23 +9,31 @@ export async function get_posts({
                                   paged,
                                   status
                                 }: IPostsRequest): Promise<IPost[]> {
-  const response = await $api.post("/posts", {
-    post_type,
-    number_posts,
-    paged,
-    orderBy: orderBy || "post_id",
-    order: order || "ASC",
-    status: status || "Publish"
-  });
+  try {
+    const response = await $api.post("/posts", {
+      post_type,
+      number_posts,
+      paged,
+      orderBy: orderBy || "post_id",
+      order: order || "ASC",
+      status: status || "Publish"
+    });
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function get_post(options: IPostRequest): Promise<IPost> {
-  const response = await $api.post('/posts/post', {
-    post_id: options.post_id,
-    attributes: options.attributes
-  });
+  try {
+    const response = await $api.post('/posts/post', {
+      post_id: options.post_id,
+      attributes: options.attributes
+    });
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
 }

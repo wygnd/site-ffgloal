@@ -15,9 +15,9 @@ const Logo = () => {
     setLogo(data);
   }
 
-  useEffect(() => {
-    getLogoData();
-  }, [])
+  // useEffect(() => {
+  //   getLogoData();
+  // }, [])
 
   return (
     <div>

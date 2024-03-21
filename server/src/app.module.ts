@@ -63,7 +63,7 @@ import {SettingModel} from "./settings/Setting.model";
     SizeModule,
     TypeModule,
     PageModule,
-    SettingModule
+    SettingModule,
   ],
   controllers: [],
   providers: [],

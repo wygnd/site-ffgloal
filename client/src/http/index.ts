@@ -2,12 +2,12 @@ import axios, {AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {AxiosError} from "axios";
 
 const $api = axios.create({
-  baseURL: 'http://localhost:7000/api',
+  baseURL: process.env.SERVER_URL,
   withCredentials: true
 })
 
 const $apiAuth = axios.create({
-  baseURL: process.env.SERVER_URL,
+  baseURL: process.env.SERVER_URL_TEST,
   withCredentials: true
 })
 
