@@ -7,8 +7,8 @@ const $api = axios.create({
 })
 
 const $apiAuth = axios.create({
-  baseURL: process.env.SERVER_URL_TEST,
-  withCredentials: true
+  baseURL: process.env.SERVER_URL,
+  withCredentials: true,
 })
 
 $apiAuth.interceptors.request.use((config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
@@ -19,15 +19,24 @@ $apiAuth.interceptors.request.use((config: InternalAxiosRequestConfig): Internal
   return config;
 })
 
-const onResponseError = (error: AxiosError): Promise<AxiosError> => {
+const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
 
-  // const originalRequest = error.config;
-  // if(error.response.status === 401 && error.config) {
-  //
-  // }
+  if (error.response.status !== 401 && !error.config) {
+    window.history.go(-1);
+    throw error;
+  }
 
-  return Promise.reject(error);
-}
+  try {
+    const response = await axios.get(`${process.env.SERVER_URL}/auth/refresh`, {
+      withCredentials: true
+    });
+    localStorage.setItem('apiToken', response.data.token);
+    return Promise.reject(error);
+  } catch (e) {
+    window.history.go(-1)
+    console.log('Пользователь не авторизован');
+  }
+};
 
 $apiAuth.interceptors.response.use((config: AxiosResponse): AxiosResponse => {
   return config;

@@ -1,4 +1,4 @@
-import {Body, Controller, HttpException, HttpStatus, Post, Req, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Req, Res} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateUserDto} from "../users/dto/create-user.dto";
@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @ApiOperation({summary: "Обновление сессии"})
-  @Post('/refresh')
+  @Get('/refresh')
   async refreshSession(@Req() request: Request, @Res() response: Response) {
     const {jwtToken} = request.cookies;
 
