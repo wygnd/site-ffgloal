@@ -5,6 +5,7 @@ import {CreateUserDto} from "../users/dto/create-user.dto";
 import * as bcrypt from 'bcryptjs';
 import {UserModel} from "../users/user.model";
 import {Response} from 'express';
+import {UserResponseDto} from "./dto/user-response.dto";
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
       const token = await this.generateToken(userData);
       response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
       return {
-        user: userData,
+        user: new UserResponseDto(userData),
         token
       };
     } catch (e) {
@@ -56,7 +57,7 @@ export class AuthService {
     const token = await this.generateToken(user);
     response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
     return {
-      user,
+      user: new UserResponseDto(user),
       token
     };
   }
