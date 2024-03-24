@@ -2,25 +2,44 @@ import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import './Auth-page.scss';
 import {IUserAuth} from "@/@types/user";
-
+import {sign_in} from "@/http/auth-http";
+import {userStore} from "@/store/user-store";
+import {redirect, useNavigate} from "react-router-dom";
 
 
 const AuthPage = () => {
 
   const [formData, setFormData] = useState<IUserAuth>(null);
   const [validated, setValidated] = useState<boolean>(false);
+  const {is_auth, setUser, setAuth} = userStore();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  //   console.log(is_auth);
+  // if (is_auth) {
+  //   navigate('/admin');
+  // }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
 
-
     if (!form.checkValidity() || !formData) {
-    setValidated(false);
+      setValidated(true);
+      return;
     }
 
-      setValidated(true);
+    setValidated(false);
+    const data = await sign_in(formData);
+    if (!data) {
+      setUser(null);
+      setAuth(false);
+      alert('Что-то пошло не так');
+    }
+    setUser(data.user);
+    setAuth(true);
+    localStorage.setItem("jwtToken", data.token);
+    redirect('/admin');
   };
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

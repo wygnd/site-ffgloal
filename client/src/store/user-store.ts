@@ -1,14 +1,18 @@
 import {create} from "zustand";
-import {IUser} from "@/@types/user";
+import {IUser, IUserStore} from "@/@types/user";
 
-interface IUserStore {
-  is_auth: boolean;
-  setUserData: (users: any) => void
-}
-
-const userStore = create<IUserStore>()((set) => ({
+export const userStore = create<IUserStore>()((set) => ({
+  user: null,
   is_auth: false,
-  setUserData: (data: IUser) => set(state => (
-    {}
+  setUser: (data: IUser) => set(() => (
+    {
+      user: data
+    }
+  )),
+  setAuth: (is_auth: boolean) => set(() => (
+    {
+      is_auth: is_auth
+    }
   ))
+
 }))
