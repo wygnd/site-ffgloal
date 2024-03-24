@@ -1,0 +1,17 @@
+@import 'styles/variables';
+
+.auth {
+  &-page {
+    &__holder {
+      margin-top: 100px;
+      max-width: 457px;
+      margin-inline: auto;
+      box-shadow: 0 4px 17px 0 rgba(0, 0, 0, 0.17);
+      border-radius: 30px;
+    }
+
+    &__form {
+      padding: 88px 92px;
+    }
+  }
+}

@@ -2,11 +2,13 @@ import {create} from "zustand";
 import {IUser} from "@/@types/user";
 
 interface IUserStore {
-  users: IUser[];
-  setUsers: (users: IUser[]) => void
+  is_auth: boolean;
+  setUserData: (users: any) => void
 }
 
 const userStore = create<IUserStore>()((set) => ({
-  users: [],
-  setUsers: (newUsers) => set((state) => ({users: state.users = newUsers}))
+  is_auth: false,
+  setUserData: (data: IUser) => set(state => (
+    {}
+  ))
 }))

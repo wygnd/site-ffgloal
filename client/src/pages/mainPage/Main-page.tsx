@@ -5,7 +5,7 @@ const MainPage = () => {
 
   return (
     <main>
-      <h1>Hello, world</h1>
+      <h1 className="text-8xl text-red-500">Hello, world</h1>
       <hr/>
     </main>
   );

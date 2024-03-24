@@ -1,5 +1,6 @@
 import axios, {AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {AxiosError} from "axios";
+import globalRouter from "@/hooks/global-router";
 
 const $api = axios.create({
   baseURL: process.env.SERVER_URL,
@@ -22,7 +23,6 @@ $apiAuth.interceptors.request.use((config: InternalAxiosRequestConfig): Internal
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
 
   if (error.response.status !== 401 && !error.config) {
-    window.history.go(-1);
     throw error;
   }
 
@@ -33,8 +33,8 @@ const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
     localStorage.setItem('apiToken', response.data.token);
     return Promise.reject(error);
   } catch (e) {
-    window.history.go(-1)
     console.log('Пользователь не авторизован');
+    globalRouter.navigate("/auth");
   }
 };
 

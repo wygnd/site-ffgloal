@@ -11,3 +11,8 @@ export interface IRole {
   value: string;
   description: string;
 }
+
+interface IUserAuth {
+  email: string;
+  password: string;
+}

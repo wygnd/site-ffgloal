@@ -1,7 +1,6 @@
 import {ModuleOptions} from 'webpack';
 import {BuildOptions} from "./types/types";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import ReactRefreshTypeScript from "react-refresh-typescript";
 import {buildBabelLoader} from "./babel/buildBabelLoader";
 
 export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
@@ -51,23 +50,32 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
   const scssLoader = {
     test: /\.s[ac]ss$/i,
     use: [
-      // Creates `style` nodes from JS strings
-      isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-      // Translates CSS into CommonJS
       {
+        // Creates `style` nodes from JS strings
+        loader: isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+      },
+      {
+        // Translates CSS into CommonJS
         loader: "css-loader",
         options: {
-          modules: {
-            localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]',
-          },
+          // modules: {
+          //   localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]',
+          // },
+          sourceMap: true,
         },
       },
-      // Compiles Sass to CSS
-      "sass-loader",
-    ],
-  };
+      {
+        // Compiles Sass to CSS
+        loader: 'sass-loader'
+      },
+      {
+        loader: 'postcss-loader',
+      },
+    ]
+  }
 
-  const babelLoader = buildBabelLoader(options);
+  const
+    babelLoader = buildBabelLoader(options);
 
   /* Важен порядок, если лоадеры обрабатывают одинаковые файлы (по типу css) !!! */
   return [

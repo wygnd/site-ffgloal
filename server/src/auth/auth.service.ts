@@ -52,7 +52,10 @@ export class AuthService {
 
     const token = await this.generateToken(user);
     response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
-    return {token};
+    return {
+      user,
+      token
+    };
   }
 
   async signout(response: Response) {

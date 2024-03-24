@@ -22,6 +22,7 @@ export async function get_posts({
     return response.data;
   } catch (e) {
     console.log(e);
+    return [];
   }
 }
 
@@ -35,5 +36,6 @@ export async function get_post(options: IPostRequest): Promise<IPost> {
     return response.data;
   } catch (e) {
     console.log(e);
+    return null;
   }
 }
