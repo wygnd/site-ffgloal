@@ -17,7 +17,10 @@ export class AuthService {
       const userData = await this.validateUser(user);
       const token = await this.generateToken(userData);
       response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
-      return {token};
+      return {
+        user: userData,
+        token
+      };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
