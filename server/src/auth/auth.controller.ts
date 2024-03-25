@@ -44,7 +44,10 @@ export class AuthController {
   @ApiOperation({summary: "Регистрация пользователя", deprecated: true})
   @ApiResponse({status: 200, type: UserModel})
   @Post('/signup')
-  async singUp() {
-    return new HttpException('Not found', HttpStatus.NOT_FOUND);
+  async singUp(@Body() dto: CreateUserDto, @Res({passthrough: true}) response: Response) {
+    const data = await this.authService.signUp(dto);
+    response.cookie('refreshToken', data.refresh_token, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true});
+    return data;
+    // return new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 }

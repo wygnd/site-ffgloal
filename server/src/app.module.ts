@@ -46,8 +46,8 @@ import {AuthModel} from "./auth/auth-model";
       ],
       synchronize: true,
       sync: {
-        alter: true,
-        force: true
+        alter: false,
+        force: false
       },
       autoLoadModels: true,
     }),

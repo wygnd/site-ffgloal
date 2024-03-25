@@ -39,8 +39,13 @@ export class AuthService {
       }
       const hashPassword = await bcrypt.hash(user.password, 5);
       const userData = await this.userService.createUser({...user, password: hashPassword});
-      const token = await this.generateTokens(userData);
-      return {token};
+      const {access_token, refresh_token} = await this.generateTokens(userData);
+      await this.saveToken(userData.user_id, refresh_token);
+      return {
+        user: new UserResponseDto(userData),
+        access_token,
+        refresh_token
+      };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
