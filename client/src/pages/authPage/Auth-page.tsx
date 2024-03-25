@@ -31,10 +31,12 @@ const AuthPage = () => {
 
     setValidated(false);
     const data = await sign_in(formData);
+    console.log(data);
     if (!data) {
       setUser(null);
       setAuth(false);
       alert('Что-то пошло не так');
+      return;
     }
     setUser(data.user);
     setAuth(true);
