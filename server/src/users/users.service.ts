@@ -6,13 +6,13 @@ import {RolesService} from "../roles/roles.service";
 import {RolesModel} from "../roles/roles.model";
 import {JwtService} from "@nestjs/jwt";
 import {IUser} from "./interface/user.interface";
-import {UserRolesModel} from "../roles/user-roles.model";
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(UserModel) private userRepository: typeof UserModel,
-              private rolesServices: RolesService,
-              private jwtService: JwtService) {
+  constructor(
+    @InjectModel(UserModel) private userRepository: typeof UserModel,
+    private rolesServices: RolesService,
+    private jwtService: JwtService) {
   }
 
   async createUser(new_user: CreateUserDto) {

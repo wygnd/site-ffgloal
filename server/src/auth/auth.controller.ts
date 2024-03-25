@@ -14,22 +14,31 @@ export class AuthController {
   @ApiOperation({summary: "Авторизация пользователя"})
   @ApiResponse({status: 200, type: UserModel})
   @Post('/signin')
-  async signIn(@Res({passthrough: true}) response: Response, @Body() user: CreateUserDto) {
-    return this.authService.signIn(user, response);
+  async signIn(@Body() user: CreateUserDto, @Res({passthrough: true}) response: Response) {
+    const data = await this.authService.signIn(user);
+    response.cookie('refreshToken', data.refresh_token, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true});
+    return data;
   }
 
   @ApiOperation({summary: "Выход"})
   @Post('/signout')
   async signOut(@Req() request: Request, @Res({passthrough: true}) response: Response) {
-    return this.authService.signout(response);
+    const {refreshToken} = request.cookies;
+    const data = await this.authService.signout(refreshToken);
+    response.clearCookie("refreshToken");
+    if (data) {
+      return {message: "Выход выполнен"}
+    }
+    return data;
   }
 
   @ApiOperation({summary: "Обновление сессии"})
   @Get('/refresh')
-  async refreshSession(@Req() request: Request, @Res() response: Response) {
-    const {jwtToken} = request.cookies;
-
-    return this.authService.refreshSession(jwtToken, response);
+  async refreshSession(@Req() request: Request, @Res({passthrough: true}) response: Response) {
+    const {refreshToken} = request.cookies;
+    const data = await this.authService.refreshSession(refreshToken);
+    response.cookie('refreshToken', data.refresh_token, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true});
+    return data;
   }
 
   @ApiOperation({summary: "Регистрация пользователя", deprecated: true})

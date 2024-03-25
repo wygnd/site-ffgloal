@@ -26,6 +26,7 @@ import {PageModel} from "./pages/page.model";
 import {PageStatusModel} from "./pages/page-status.model";
 import {SettingModule} from './settings/setting.module';
 import {SettingModel} from "./settings/Setting.model";
+import {AuthModel} from "./auth/auth-model";
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import {SettingModel} from "./settings/Setting.model";
     TypeModule,
     PageModule,
     SettingModule,
+    AuthModel
   ],
   controllers: [],
   providers: [],

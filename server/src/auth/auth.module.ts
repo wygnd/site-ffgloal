@@ -3,24 +3,23 @@ import {AuthService} from './auth.service';
 import {AuthController} from './auth.controller';
 import {UsersModule} from "../users/users.module";
 import {JwtModule} from "@nestjs/jwt";
+import {SequelizeModule} from "@nestjs/sequelize";
+import {AuthModel} from "./auth-model";
 
 @Module({
-    imports: [
-        forwardRef(() => UsersModule),
-        JwtModule.register({
-            global: true,
-            secret: process.env.JWT_SECRET_KEY || "JWT_secret_fewjn@xxv_key",
-            signOptions: {
-                expiresIn: "24h"
-            }
-        })
-    ],
-    controllers: [AuthController],
-    providers: [AuthService],
-    exports: [
-        AuthModule,
-        JwtModule
-    ],
+  imports: [
+    SequelizeModule.forFeature([AuthModel]),
+    forwardRef(() => UsersModule),
+    JwtModule.register({
+      global: true
+    })
+  ],
+  controllers: [AuthController],
+  providers: [AuthService],
+  exports: [
+    AuthModule,
+    JwtModule
+  ],
 })
 export class AuthModule {
 }

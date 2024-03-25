@@ -4,30 +4,34 @@ import {JwtService} from "@nestjs/jwt";
 import {CreateUserDto} from "../users/dto/create-user.dto";
 import * as bcrypt from 'bcryptjs';
 import {UserModel} from "../users/user.model";
-import {Response} from 'express';
 import {UserResponseDto} from "./dto/user-response.dto";
+import {AuthModel} from "./auth-model";
+import {InjectModel} from "@nestjs/sequelize";
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService,
-              private jwtService: JwtService) {
+  constructor(
+    @InjectModel(AuthModel) private AuthRepository: typeof AuthModel,
+    private userService: UsersService,
+    private jwtService: JwtService) {
   }
 
-  async signIn(user: CreateUserDto, response: Response) {
+  async signIn(user: CreateUserDto) {
     try {
       const userData = await this.validateUser(user);
-      const token = await this.generateToken(userData);
-      response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
+      const {access_token, refresh_token} = await this.generateTokens(userData);
+
       return {
         user: new UserResponseDto(userData),
-        token
+        access_token,
+        refresh_token
       };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async signUp(user: CreateUserDto, response: Response) {
+  async signUp(user: CreateUserDto) {
     try {
       const candidate = await this.userService.getUserByEmail(user.email);
       if (candidate) {
@@ -35,36 +39,37 @@ export class AuthService {
       }
       const hashPassword = await bcrypt.hash(user.password, 5);
       const userData = await this.userService.createUser({...user, password: hashPassword});
-      const token = await this.generateToken(userData);
-      response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
+      const token = await this.generateTokens(userData);
       return {token};
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async refreshSession(jwtToken: string, response: Response) {
-    if (!jwtToken) {
+  async refreshSession(refresh_token_client: string) {
+    if (!refresh_token_client) {
       throw new UnauthorizedException("Пользователь не авторизован");
     }
 
-    const user = await this.validateToken(jwtToken);
+    const user = await this.validateRefreshToken(refresh_token_client);
+    const tokenFromDatabase = await this.getToken(refresh_token_client);
 
-    if (!user) {
+    if (!user || !tokenFromDatabase) {
       throw new UnauthorizedException("Пользователь не авторизован");
     }
-
-    const token = await this.generateToken(user);
-    response.cookie("jwtToken", token, {httpOnly: true, domain: process.env.CLIENT_URL});
+    const userFromDatabase = await this.userService.getUserByEmail(user.email);
+    const {access_token, refresh_token} = await this.generateTokens(user);
+    await this.saveToken(user.user_id, refresh_token);
     return {
-      user: new UserResponseDto(user),
-      token
+      user: new UserResponseDto(userFromDatabase),
+      access_token,
+      refresh_token
     };
   }
 
-  async signout(response: Response) {
+  async signout(refresh_token) {
     try {
-      response.clearCookie("jwtToken");
+      await this.removeToken(refresh_token);
       return {
         message: "Выход выполнен",
         status: HttpStatus.OK
@@ -74,13 +79,20 @@ export class AuthService {
     }
   }
 
-  private async generateToken(user: UserModel) {
+  private async generateTokens(user: UserModel) {
     const payload = {user_id: user.user_id, email: user.email, roles: user.roles};
-    return await this.jwtService.signAsync(payload);
-  }
-
-  private async validateToken(token: string) {
-    return await this.jwtService.verifyAsync(token);
+    const access_token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET_KEY_REFRESH,
+      expiresIn: "1h"
+    });
+    const refresh_token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET_KEY_ACCESS,
+      expiresIn: "7d"
+    })
+    return {
+      access_token,
+      refresh_token
+    };
   }
 
   private async validateUser(userDto: CreateUserDto) {
@@ -96,5 +108,54 @@ export class AuthService {
     }
 
     throw new UnauthorizedException({message: "Неверный email или password"});
+  }
+
+  private async removeToken(refresh_token) {
+    try {
+      return await this.AuthRepository.destroy({where: {refresh_token}});
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  private async saveToken(user_id: number, refresh_token: string) {
+    const [tokenData, isCreated] = await this.AuthRepository.findOrCreate({
+      where: {user_id},
+      defaults: {
+        user_id,
+        refresh_token
+      }
+    });
+
+    if (!isCreated) {
+      tokenData.refresh_token = refresh_token;
+      return await tokenData.save();
+    }
+
+    return tokenData;
+  }
+
+  private async findToken(refresh_token) {
+    return await this.AuthRepository.findOne({where: refresh_token});
+  }
+
+  private async validateAccessToken(access_token) {
+    try {
+      return await this.jwtService.verifyAsync(access_token, {secret: process.env.JWT_SECRET_KEY_ACCESS});
+    } catch (e) {
+      return null;
+    }
+  }
+
+  private async validateRefreshToken(refresh_token) {
+    try {
+      return await this.jwtService.verifyAsync(refresh_token, {secret: process.env.JWT_SECRET_KEY_REFRESH});
+    } catch (e) {
+      return null;
+    }
+  }
+
+  private async getToken(refresh_token) {
+    return await this.AuthRepository.findOne({where: refresh_token});
   }
 }
