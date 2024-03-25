@@ -16,16 +16,20 @@ export class UsersService {
   }
 
   async createUser(new_user: CreateUserDto) {
-    const candidate = await this.userRepository.findOne({where: {email: new_user.email}});
-    if (candidate) {
-      throw new HttpException(`Пользователь с такой почтой (${new_user.email}) уже существует`, HttpStatus.CONFLICT);
-    }
+    try {
+      const candidate = await this.userRepository.findOne({where: {email: new_user.email}});
+      if (candidate) {
+        throw new HttpException(`Пользователь с такой почтой (${new_user.email}) уже существует`, HttpStatus.CONFLICT);
+      }
 
-    const user = await this.userRepository.create(new_user);
-    const userRole = await this.rolesServices.getRoleByValue("ADMIN");
-    await user.$set("roles", [userRole.role_id]);
-    user.roles = [userRole];
-    return user;
+      const user = await this.userRepository.create(new_user);
+      const userRole = await this.rolesServices.getRoleByValue("ADMIN");
+      await user.$set("roles", [userRole.role_id]);
+      user.roles = [userRole];
+      return user;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async getAllUsers() {
