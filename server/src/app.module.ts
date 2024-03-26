@@ -42,7 +42,7 @@ import {AuthModel} from "./auth/auth-model";
       database: process.env.DB_DATABASE_PG,
       models: [
         UserModel, RolesModel, UserRolesModel, PostModel, StatusModel, PostStatusModel, UploadModel, TypeModel, SizeModel, PageModel, PostPageModel,
-        PageStatusModel, SettingModel
+        PageStatusModel, SettingModel, AuthModel
       ],
       synchronize: true,
       sync: {
@@ -65,7 +65,6 @@ import {AuthModel} from "./auth/auth-model";
     TypeModule,
     PageModule,
     SettingModule,
-    AuthModel
   ],
   controllers: [],
   providers: [],

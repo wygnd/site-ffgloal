@@ -50,10 +50,10 @@ export class UploadModel extends Model<UploadModel> {
   @ApiProperty({
     example: 1,
     description: "Внешний ключ для связи с таблицой размеров изображений",
-    required: true
+    required: false
   })
   @ForeignKey(() => SizeModel)
-  @Column({type: DataType.INTEGER, defaultValue: null})
+  @Column({type: DataType.INTEGER})
   size_id: number;
 
   @BelongsTo(() => SizeModel)

@@ -40,7 +40,7 @@ export class AuthService {
       const hashPassword = await bcrypt.hash(user.password, 5);
       const userData = await this.userService.createUser({...user, password: hashPassword});
       const {access_token, refresh_token} = await this.generateTokens(userData);
-      await this.saveToken(userData.user_id, refresh_token);
+      await this.saveToken(userData.user_id, access_token, refresh_token);
       return {
         user: new UserResponseDto(userData),
         access_token,
@@ -64,7 +64,7 @@ export class AuthService {
     }
     const userFromDatabase = await this.userService.getUserByEmail(user.email);
     const {access_token, refresh_token} = await this.generateTokens(user);
-    await this.saveToken(user.user_id, refresh_token);
+    await this.saveToken(user.user_id, access_token, refresh_token);
     return {
       user: new UserResponseDto(userFromDatabase),
       access_token,
@@ -123,12 +123,13 @@ export class AuthService {
     }
   }
 
-  private async saveToken(user_id: number, refresh_token: string) {
+  private async saveToken(user_id: number, access_token: string, refresh_token: string) {
     const [tokenData, isCreated] = await this.AuthRepository.findOrCreate({
       where: {user_id},
       defaults: {
         user_id,
-        refresh_token
+        refresh_token,
+        access_token
       }
     });
 

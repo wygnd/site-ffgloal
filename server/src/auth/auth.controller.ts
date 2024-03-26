@@ -27,7 +27,7 @@ export class AuthController {
     const data = await this.authService.signout(refreshToken);
     response.clearCookie("refreshToken");
     if (data) {
-      return {message: "Выход выполнен"}
+      return {message: "Выход выполнен", status: HttpStatus.OK}
     }
     return data;
   }

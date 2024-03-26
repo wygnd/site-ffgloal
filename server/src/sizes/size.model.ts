@@ -1,4 +1,4 @@
-import {Column, DataType, HasOne, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
 import {UploadModel} from "../uploads/upload.model";
 
