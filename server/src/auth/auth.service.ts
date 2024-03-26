@@ -88,11 +88,11 @@ export class AuthService {
   private async generateTokens(user: UserModel) {
     const payload = {user_id: user.user_id, email: user.email, roles: user.roles};
     const access_token = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET_KEY_REFRESH,
+      secret: process.env.JWT_SECRET_KEY_ACCESS,
       expiresIn: "1h"
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET_KEY_ACCESS,
+      secret: process.env.JWT_SECRET_KEY_REFRESH,
       expiresIn: "7d"
     })
     return {
