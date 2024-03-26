@@ -35,8 +35,8 @@ export class AuthController {
   @ApiOperation({summary: "Обновление сессии"})
   @Get('/refresh')
   async refreshSession(@Req() request: Request, @Res({passthrough: true}) response: Response) {
-    const {refreshToken} = request.cookies;
-    const data = await this.authService.refreshSession(refreshToken);
+    const access_token = request.headers.authorization.split(' ')[1];
+    const data = await this.authService.refreshSession(access_token);
     response.cookie('refreshToken', data.refresh_token, {maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true});
     return data;
   }

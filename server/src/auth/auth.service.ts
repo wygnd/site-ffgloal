@@ -51,15 +51,13 @@ export class AuthService {
     }
   }
 
-  async refreshSession(refresh_token_client: string) {
-    if (!refresh_token_client) {
+  async refreshSession(access_token_client: string) {
+    if (!access_token_client) {
       throw new UnauthorizedException("Пользователь не авторизован 1");
     }
 
-    const user = await this.validateRefreshToken(refresh_token_client);
-    const tokenFromDatabase = await this.getToken(refresh_token_client);
-
-    console.log(user, tokenFromDatabase)
+    const user = await this.validateAccessToken(access_token_client);
+    const tokenFromDatabase = await this.getToken(access_token_client);
 
     if (!user || !tokenFromDatabase) {
       throw new UnauthorizedException("Пользователь не авторизован 2");
@@ -167,7 +165,7 @@ export class AuthService {
     }
   }
 
-  private async getToken(refresh_token: string) {
-    return await this.AuthRepository.findOne({where: {refresh_token}});
+  private async getToken(access_token: string) {
+    return await this.AuthRepository.findOne({where: {access_token}});
   }
 }
