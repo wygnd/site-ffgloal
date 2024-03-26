@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import './Auth-page.scss';
 import {IUserAuth} from "@/@types/user";
@@ -14,11 +14,6 @@ const AuthPage = () => {
   const {is_auth, setUser, setAuth} = userStore();
   const navigate = useNavigate();
 
-  //   console.log(is_auth);
-  // if (is_auth) {
-  //   navigate('/admin');
-  // }
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -31,7 +26,6 @@ const AuthPage = () => {
 
     setValidated(false);
     const data = await sign_in(formData);
-    console.log(data);
     if (!data) {
       setUser(null);
       setAuth(false);
@@ -40,7 +34,7 @@ const AuthPage = () => {
     }
     setUser(data.user);
     setAuth(true);
-    localStorage.setItem("jwtToken", data.token);
+    localStorage.setItem("jwtToken", data.access_token);
     redirect('/admin');
   };
 
@@ -50,6 +44,12 @@ const AuthPage = () => {
 
     setFormData({...formData, [inputType]: inputValue});
   }
+
+  useEffect(() => {
+    if (is_auth) {
+      navigate('/admin');
+    }
+  }, []);
 
   return (
     <main id="main" className="auth-page">

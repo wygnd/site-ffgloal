@@ -125,7 +125,7 @@ export class AuthService {
 
   private async saveToken(user_id: number, access_token: string, refresh_token: string) {
     const [tokenData, isCreated] = await this.AuthRepository.findOrCreate({
-      where: {user_id},
+      where: {user_id: user_id},
       defaults: {
         user_id,
         access_token,

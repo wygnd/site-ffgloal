@@ -1,7 +1,8 @@
 import {ISignInResponse, IUserAuth} from "@/@types/user";
-import {$api} from "@/http/index";
-import globalRouter from "@/hooks/global-router";
+import {$api, $apiAuth} from "@/http/index";
+import globalRouter from "@/utils/global-router";
 import {AxiosError} from "axios";
+import {userStore} from "@/store/user-store";
 
 export async function sign_in(user: IUserAuth) {
   try {
@@ -13,17 +14,3 @@ export async function sign_in(user: IUserAuth) {
   }
 }
 
-export async function refresh_session(error: AxiosError) {
-  try {
-    // const {setAuth} = userStore();
-    const response = await $api.get('/auth/refresh');
-    localStorage.setItem('jwtToken', response.data.token);
-    console.log(response.data.token)
-    // setAuth(true);
-    return Promise.reject(error);
-  } catch (e) {
-    console.log(e);
-    console.log('Пользователь не авторизован');
-    globalRouter.navigate("/auth");
-  }
-};

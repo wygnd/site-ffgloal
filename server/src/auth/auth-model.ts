@@ -9,7 +9,7 @@ export class AuthModel extends Model<AuthModel> {
   token_id: number;
 
   @ApiProperty({example: "gewsuygbfqhjiabeuiyhgwvb.efwgew", description: "Токен доступа", required: true})
-  @Column({type: DataType.TEXT("medium"), allowNull: false})
+  @Column({type: DataType.TEXT({length: "medium"}), allowNull: false})
   access_token: string;
 
   @ApiProperty({
@@ -17,7 +17,7 @@ export class AuthModel extends Model<AuthModel> {
     description: "Токен для обновления токена доступа",
     required: true
   })
-  @Column({type: DataType.TEXT("medium"), allowNull: false})
+  @Column({type: DataType.TEXT({length: "medium"}), allowNull: false})
   refresh_token: string;
 
   @ApiProperty({example: 1, description: "Внешний ключ, указываюший кому принадлежат токены", required: true})
