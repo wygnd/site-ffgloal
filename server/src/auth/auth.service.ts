@@ -53,7 +53,7 @@ export class AuthService {
 
   async refreshSession(refresh_token_client: string) {
     if (!refresh_token_client) {
-      throw new UnauthorizedException("Пользователь не авторизован");
+      throw new UnauthorizedException("Пользователь не авторизован 1");
     }
 
     const user = await this.validateRefreshToken(refresh_token_client);
@@ -62,13 +62,12 @@ export class AuthService {
     console.log(user, tokenFromDatabase)
 
     if (!user || !tokenFromDatabase) {
-      throw new UnauthorizedException("Пользователь не авторизован");
+      throw new UnauthorizedException("Пользователь не авторизован 2");
     }
-    const userFromDatabase = await this.userService.getUserByEmail(user.email);
     const {access_token, refresh_token} = await this.generateTokens(user);
     await this.saveToken(user.user_id, access_token, refresh_token);
     return {
-      user: new UserResponseDto(userFromDatabase),
+      user: new UserResponseDto(user),
       access_token,
       refresh_token
     };
@@ -148,11 +147,11 @@ export class AuthService {
     return tokenData;
   }
 
-  private async findToken(refresh_token) {
-    return await this.AuthRepository.findOne({where: refresh_token});
+  private async findToken(refresh_token: string) {
+    return await this.AuthRepository.findOne({where: {refresh_token}});
   }
 
-  private async validateAccessToken(access_token) {
+  private async validateAccessToken(access_token: string) {
     try {
       return await this.jwtService.verifyAsync(access_token, {secret: process.env.JWT_SECRET_KEY_ACCESS});
     } catch (e) {
@@ -160,7 +159,7 @@ export class AuthService {
     }
   }
 
-  private async validateRefreshToken(refresh_token) {
+  private async validateRefreshToken(refresh_token: string) {
     try {
       return await this.jwtService.verifyAsync(refresh_token, {secret: process.env.JWT_SECRET_KEY_REFRESH});
     } catch (e) {
