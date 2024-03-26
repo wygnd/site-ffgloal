@@ -59,4 +59,13 @@ export class UsersService {
       throw new HttpException(e, HttpStatus.FORBIDDEN);
     }
   }
+
+  async getUserById(user_id: number) {
+    const user = await this.userRepository.findByPk(user_id);
+    if (!user) {
+      throw new HttpException('Пользователя не существует', HttpStatus.NOT_FOUND);
+    }
+
+    return user;
+  }
 }

@@ -139,6 +139,10 @@ export class AuthService {
       return await tokenData.save();
     }
 
+    const user = await this.userService.getUserById(user_id);
+
+    await tokenData.$set('user_model', user);
+
     return tokenData;
   }
 
