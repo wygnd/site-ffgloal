@@ -59,6 +59,8 @@ export class AuthService {
     const user = await this.validateRefreshToken(refresh_token_client);
     const tokenFromDatabase = await this.getToken(refresh_token_client);
 
+    console.log(user, tokenFromDatabase)
+
     if (!user || !tokenFromDatabase) {
       throw new UnauthorizedException("Пользователь не авторизован");
     }
@@ -72,7 +74,7 @@ export class AuthService {
     };
   }
 
-  async signout(refresh_token) {
+  async signout(refresh_token: string) {
     try {
       await this.removeToken(refresh_token);
       return {
