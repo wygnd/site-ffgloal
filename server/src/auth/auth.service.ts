@@ -20,7 +20,7 @@ export class AuthService {
     try {
       const userData = await this.validateUser(user);
       const {access_token, refresh_token} = await this.generateTokens(userData);
-
+      await this.saveToken(userData.user_id, access_token, refresh_token);
       return {
         user: new UserResponseDto(userData),
         access_token,
