@@ -128,12 +128,13 @@ export class AuthService {
       where: {user_id},
       defaults: {
         user_id,
+        access_token,
         refresh_token,
-        access_token
       }
     });
 
     if (!isCreated) {
+      tokenData.access_token = access_token;
       tokenData.refresh_token = refresh_token;
       return await tokenData.save();
     }
