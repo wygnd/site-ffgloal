@@ -166,7 +166,7 @@ export class AuthService {
     }
   }
 
-  private async getToken(refresh_token) {
-    return await this.AuthRepository.findOne({where: refresh_token});
+  private async getToken(refresh_token: string) {
+    return await this.AuthRepository.findOne({where: {refresh_token}});
   }
 }
