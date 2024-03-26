@@ -45,10 +45,11 @@ const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
 
 async function refresh_session(error: AxiosError) {
   try {
-    const response = await $api.get('/auth/refresh', {withCredentials: true});
+    const originalRequest = error.config;
+    const response = await axios.get(`${process.env.SERVER_URL}/auth/refresh`, {withCredentials: true});
     localStorage.setItem('jwtToken', response.data.access_token);
     userStore.getState().setAuth(true)
-    return Promise.reject(error);
+    return Promise.reject($apiAuth.request(originalRequest));
   } catch (e) {
     console.log(e);
     console.log('Пользователь не авторизован');
