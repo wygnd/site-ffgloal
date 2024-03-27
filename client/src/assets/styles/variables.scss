@@ -1,22 +1,58 @@
+/*============= FUNCTIONS ===============*/
+@function calcFluidFontSize($f-min, $f-max) {
+  $k: calc(($f-max - $f-min) / (1920 - 320));
+  $b: $f-min - $k * 320;
+
+  $b: $b * 1px;
+
+  @return clamp(#{$f-min}px, calc(#{$k} * 100vw + #{$b}), #{$f-max}px);
+}
+
+
+/*================ COLORS ================*/
+$primary: #161616;
+$accent: #FFD622;
+$hover: #EFC223;
+$red: red;
+$neutral: #F4F4F4;
+$card: #ffffff;
+$system: #F4F4F4;
+
+/*================ MIXINS ================*/
 @mixin h4 {
-  font-family: "InterTight", sans-serif;
-  font-size: 25px;
+  font-size: calcFluidFontSize(18, 25);
   font-weight: 600;
   line-height: 110%;
 }
 
 @mixin xl_bold {
-  font-family: "InterTight", sans-serif;
-  font-size: 64px;
+  font-size: calcFluidFontSize(25, 64);
   font-weight: 700;
   line-height: 64px;
   text-align: left;
 }
 
 @mixin l_bold {
-  font-family: "InterTight", sans-serif;
-  font-size: 40px;
+  font-size: calcFluidFontSize(22, 40);
   font-weight: 700;
   line-height: 44px;
   text-align: left;
+}
+
+@mixin m_bold {
+  font-weight: 700;
+  font-size: calcFluidFontSize(17, 24);
+  line-height: 133%;
+}
+
+@mixin m_regular {
+  font-weight: 600;
+  font-size: calcFluidFontSize(14, 16);
+  line-height: 150%;
+}
+
+@mixin s_regular {
+  font-weight: 500;
+  font-size: calcFluidFontSize(12, 14);
+  line-height: 143%;
 }

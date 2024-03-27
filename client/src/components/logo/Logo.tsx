@@ -1,31 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {IPost, IPostRequest} from "@/@types/post";
-import {get_post} from "@/http/posts";
+import React from 'react';
+import './Logo.scss';
+import logo_icon from '@/assets/images/logo-icon.png';
 
 const Logo = () => {
-
-  const [logo, setLogo] = useState<IPost>(null);
-
-  const getLogoData = async () => {
-    const args: IPostRequest = {
-      post_id: 4
-    }
-
-    const data = await get_post(args);
-    setLogo(data);
-  }
-
-  // useEffect(() => {
-  //   getLogoData();
-  // }, [])
-
-  return (
-    <div>
-      {logo && (
-        <h2>{logo.title}</h2>
-      )}
-    </div>
-  );
+    return (
+        <a href="/" rel="noreferrer" className="logo-holder">
+            <img src={logo_icon} alt="site-logo" className="logo-icon"/>
+            <span className="logo-title">FFGlobal</span>
+        </a>
+    );
 };
 
 export default Logo;

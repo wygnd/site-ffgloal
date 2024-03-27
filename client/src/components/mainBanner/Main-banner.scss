@@ -1,0 +1,168 @@
+@import 'styles/variables';
+
+.main {
+  &-block {
+    padding-bottom: 90px;
+
+    &_top {
+      border-radius: 30px;
+      background: $system;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 22px 30px 22px 60px;
+    }
+
+    &_content {
+      .content {
+        &-title {
+          @include xl_bold;
+          color: $primary;
+          margin-bottom: 26px;
+        }
+
+        &-desc {
+          position: relative;
+          @include l_bold;
+          color: $primary;
+          width: fit-content;
+          display: block;
+
+          .desc {
+            &-question {
+              display: flex;
+              justify-content: flex-end;
+              height: 100%;
+              position: absolute;
+              right: -80px;
+              top: -10px;
+
+              svg {
+                width: 20px;
+                height: 20px;
+              }
+
+              &:hover {
+                .desc-text {
+                  pointer-events: all;
+                  opacity: 1;
+                }
+              }
+            }
+
+            &-title {
+              display: flex;
+              align-items: flex-start;
+              gap: 6px;
+              flex-shrink: 0;
+              width: fit-content;
+              @include s_regular;
+              color: $primary;
+            }
+
+            &-text {
+              pointer-events: none;
+              box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+              padding: 20px;
+              border-radius: 15px;
+              margin-top: 5px;
+              background: $card;
+              @include s_regular;
+              color: $primary;
+              opacity: 0;
+              position: absolute;
+              top: 20px;
+              right: 0;
+              width: 300px;
+              display: flex;
+              height: fit-content;
+              transition: opacity .1s ease-out;
+            }
+          }
+        }
+      }
+    }
+
+    &_bottom {
+      display: flex;
+      gap: 20px;
+      margin-top: 18px;
+    }
+
+    &_info {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+
+      .info {
+        &-holder {
+          border-radius: 30px;
+          padding: 30px 35px 30px 55px;
+          background: $system;
+          height: 100%;
+        }
+
+        &-title {
+          @include l_bold;
+          color: $primary;
+          margin-bottom: 23px;
+          width: 94%;
+        }
+
+        &-desc {
+          @include m_regular;
+          color: $primary;
+        }
+
+        &-buttons {
+          display: flex;
+          gap: 20px;
+        }
+      }
+    }
+
+    &_sales {
+      width: 50%;
+      position: relative;
+    }
+
+    &_theme {
+      .theme {
+        &-prev {
+          position: absolute;
+          top: 50%;
+          left: 20px;
+          transform: translate(0, -50%);
+          z-index: 10;
+          cursor: pointer;
+
+          &.swiper-button-disabled {
+            cursor: no-drop;
+          }
+        }
+
+        &-next {
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translate(0, -50%);
+          z-index: 10;
+          cursor: pointer;
+
+          &.swiper-button-disabled {
+            cursor: no-drop;
+          }
+        }
+      }
+    }
+
+    &_markets {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
+    }
+  }
+}

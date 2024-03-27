@@ -48,7 +48,8 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
   }
 
   const scssLoader = {
-    test: /\.s[ac]ss$/i,
+    // test: /\.s[ac]ss$/i,
+    test: /\.(sa|sc|c)ss$/,
     use: [
       {
         // Creates `style` nodes from JS strings

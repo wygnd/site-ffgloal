@@ -1,0 +1,44 @@
+@import 'styles/variables';
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 62px;
+  border-radius: 10px;
+  cursor: pointer;
+  @include m_regular;
+  transition: background .4s ease-out, border .4s ease-out, color .4s ease-out;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  &.primary {
+    background: $accent;
+    border: none;
+    color: $primary;
+
+    &:hover {
+      background: $hover;
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    border: 2px solid $primary;
+    color: $primary;
+
+    &:hover {
+      background: $accent;
+      border-color: $accent;
+    }
+  }
+}
+
+a.btn {
+  width: fit-content;
+  text-decoration: none;
+}

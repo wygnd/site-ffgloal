@@ -1,0 +1,30 @@
+@import "styles/variables";
+
+.navbar {
+  &-holder {
+    &_menu {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    &_item {
+      margin: 0;
+
+      &-link {
+        display: block;
+        @include m_regular;
+        color: $primary;
+        transition: color .4s ease-out;
+        text-decoration: none;
+      }
+
+      &:hover {
+        .navbar-holder_item-link {
+          color: $hover;
+        }
+      }
+    }
+  }
+}

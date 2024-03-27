@@ -1,12 +1,12 @@
 import React from 'react';
+import MainBanner from "@/components/mainBanner/Main-banner";
 
 const MainPage = () => {
 
 
   return (
     <main>
-      <h1 className="text-8xl text-red-500">Hello, world</h1>
-      <hr/>
+        <MainBanner />
     </main>
   );
 };

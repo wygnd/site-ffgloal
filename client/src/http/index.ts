@@ -1,11 +1,6 @@
 import axios, {AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {AxiosError} from "axios";
 import globalRouter from "@/utils/global-router";
-import {userStore} from "@/store/user-store";
-import {wrapper} from 'axios-cookiejar-support';
-import {CookieJar} from 'tough-cookie';
-
-// const jar = new CookieJar();
 
 const $api = axios.create({
   baseURL: process.env.SERVER_URL,
