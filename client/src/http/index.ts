@@ -33,7 +33,13 @@ const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
   if (error.response.status === 401 && error.config) {
     const originalRequest = error.config;
     try {
-      const response = await $api.get(`/auth/refresh`);
+      const response = await axios.get(`${process.env.SERVER_URL}/auth/refresh`, {
+        withCredentials: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        },
+      });
       console.log(response);
       // localStorage.setItem('jwtToken', response.data.access_token);
       // userStore.getState().setAuth(true)
