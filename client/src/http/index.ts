@@ -34,25 +34,25 @@ $apiAuth.interceptors.request.use((config: InternalAxiosRequestConfig): Internal
 })
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
+  const originalRequest = error.config;
 
-
-  if (error.response.status !== 401 && !error.config) {
+  if (error.response.status !== 401 && !originalRequest) {
     throw error;
   }
-
-  return await refresh_session(error);
-};
-
-async function refresh_session(error: AxiosError) {
   try {
-    const originalRequest = error.config;
-    const response = await axios.get(`${process.env.SERVER_URL}/auth/refresh`, {withCredentials: true});
-    localStorage.setItem('jwtToken', response.data.access_token);
-    userStore.getState().setAuth(true)
-    return Promise.reject($apiAuth.request(originalRequest));
+    const response = await $api.get(`/auth/refresh`, {
+      withCredentials: true,
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    console.log(response);
+    // localStorage.setItem('jwtToken', response.data.access_token);
+    // userStore.getState().setAuth(true)
+    return Promise.reject(error);
   } catch (e) {
     console.log(e);
-    console.log('Пользователь не авторизован');
+    console.log('Пользователь не авторизован 3');
     globalRouter.navigate("/auth");
   }
 };

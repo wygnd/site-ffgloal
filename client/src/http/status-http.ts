@@ -6,7 +6,7 @@ export async function get_statuses(): Promise<IStatus[]> {
     const response = await $apiAuth.get('/status');
     return response.data;
   } catch (e) {
-    // console.log(e.message)
+    console.log(e.message)
     return [];
   }
 }

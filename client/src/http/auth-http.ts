@@ -1,7 +1,7 @@
 import {ISignInResponse, IUserAuth} from "@/@types/user";
 import {$api, $apiAuth} from "@/http/index";
 import globalRouter from "@/utils/global-router";
-import {AxiosError} from "axios";
+import axios, {AxiosError} from "axios";
 import {userStore} from "@/store/user-store";
 
 export async function sign_in(user: IUserAuth) {
@@ -12,5 +12,9 @@ export async function sign_in(user: IUserAuth) {
     console.log(e);
     return null;
   }
+}
+
+export async function refresh() {
+  return await axios.get(`${process.env.SERVER_URL}/auth/refresh`, {withCredentials: true})
 }
 

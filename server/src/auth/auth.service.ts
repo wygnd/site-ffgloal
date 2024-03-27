@@ -19,6 +19,7 @@ export class AuthService {
   async signIn(user: CreateUserDto) {
     try {
       const userData = await this.validateUser(user);
+      console.log('fefe');
       const {access_token, refresh_token} = await this.generateTokens(userData);
       await this.saveToken(userData.user_id, access_token, refresh_token);
       return {
@@ -84,19 +85,23 @@ export class AuthService {
   }
 
   private async generateTokens(user: UserModel) {
-    const payload = {user_id: user.user_id, email: user.email, roles: user.roles};
-    const access_token = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET_KEY_ACCESS,
-      expiresIn: "1h"
-    });
-    const refresh_token = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_SECRET_KEY_REFRESH,
-      expiresIn: "7d"
-    })
-    return {
-      access_token,
-      refresh_token
-    };
+    try {
+      const payload = {user_id: user.user_id, email: user.email, roles: user.roles};
+      const access_token = await this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET_KEY_ACCESS,
+        expiresIn: "1h"
+      });
+      const refresh_token = await this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET_KEY_REFRESH,
+        expiresIn: "7d"
+      })
+      return {
+        access_token,
+        refresh_token
+      };
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
   }
 
   private async validateUser(userDto: CreateUserDto) {

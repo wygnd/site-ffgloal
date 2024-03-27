@@ -2,7 +2,7 @@ import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import './Auth-page.scss';
 import {IUserAuth} from "@/@types/user";
-import {sign_in} from "@/http/auth-http";
+import {refresh, sign_in} from "@/http/auth-http";
 import {userStore} from "@/store/user-store";
 import {redirect, useNavigate} from "react-router-dom";
 
@@ -13,6 +13,7 @@ const AuthPage = () => {
   const [validated, setValidated] = useState<boolean>(false);
   const {is_auth, setUser, setAuth} = userStore();
   const navigate = useNavigate();
+  const [data, setData] = useState<any>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -43,6 +44,12 @@ const AuthPage = () => {
     const inputValue = e.target.value;
 
     setFormData({...formData, [inputType]: inputValue});
+  }
+
+  const refreshSession = async () => {
+    const data = await refresh();
+    console.log(data);
+    setData(data);
   }
 
   useEffect(() => {
