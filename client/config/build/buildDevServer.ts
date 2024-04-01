@@ -8,6 +8,8 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     /* Работает только для режима разработки */
     historyApiFallback: true,
     hot: true,
-
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   }
 }
