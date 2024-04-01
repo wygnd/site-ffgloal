@@ -16,7 +16,8 @@ export function buildBabelLoader(options: BuildOptions) {
         {
           props: ["data-testId"]
         }
-      ]
+      ],
+      "@babel/plugin-transform-runtime"
     );
   }
 

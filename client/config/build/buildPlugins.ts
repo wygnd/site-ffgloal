@@ -39,6 +39,8 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       chunkFilename: 'css/[name].[contenthash:8].css'
     }))
 
+    plugins.push("")
+
     // Copy static files if you need
     // plugins.push(new CopyPlugin({
     //   patterns: [
