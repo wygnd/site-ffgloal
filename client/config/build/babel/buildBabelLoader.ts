@@ -21,7 +21,8 @@ export function buildBabelLoader(options: BuildOptions) {
   }
 
   return {
-    test: /\.tsx?$/,
+    // test: /\.tsx?$/,
+    test: /\.(js|jsx|ts|tsx)$/,
     exclude: /node_modules/,
     use: {
       loader: "babel-loader",

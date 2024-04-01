@@ -5,6 +5,7 @@ import IconTime from "./images/icon-time.svg"
 import IconAddress from "./images/icon-address.svg"
 import {Button} from "@/components/button/Button";
 import "./Contacts-block.scss";
+import {Helmet} from "react-helmet";
 
 
 const ContactsBlock = () => {
@@ -16,7 +17,6 @@ const ContactsBlock = () => {
         <div className="contacts-desc">Оставьте заявку или напишите нам в Telegram/WhatsApp</div>
         <div className="contacts-holder">
           <div className="contacts-holder_form">
-
           </div>
           <div className="contacts-holder_socials">
             <div className="socials-icon">
