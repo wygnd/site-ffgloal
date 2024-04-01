@@ -17,6 +17,9 @@ $red: red;
 $neutral: #F4F4F4;
 $card: #ffffff;
 $system: #F4F4F4;
+$secondary: #646464;
+$ghost: #B1B1B1;
+$border: #E1E1E1;
 
 /*================ MIXINS ================*/
 @mixin h4 {
@@ -26,17 +29,24 @@ $system: #F4F4F4;
 }
 
 @mixin xl_bold {
-  font-size: calcFluidFontSize(25, 64);
+  font-size: calcFluidFontSize(30, 64);
   font-weight: 700;
   line-height: 64px;
-  text-align: left;
+
+
+  @media (max-width: 992px) {
+    line-height: unset;
+  }
 }
 
 @mixin l_bold {
   font-size: calcFluidFontSize(22, 40);
   font-weight: 700;
   line-height: 44px;
-  text-align: left;
+
+  @media (max-width: 992px) {
+    line-height: unset;
+  }
 }
 
 @mixin m_bold {
@@ -55,4 +65,19 @@ $system: #F4F4F4;
   font-weight: 500;
   font-size: calcFluidFontSize(12, 14);
   line-height: 143%;
+}
+
+@mixin p17600 {
+  font-size: calcFluidFontSize(14, 17.5);
+  font-weight: 600;
+  line-height: 25px;
+
+  @media (max-width: 992px) {
+    line-height: unset;
+  }
+}
+
+@mixin xxl_bold {
+  font-size: calcFluidFontSize(120, 300);
+  font-weight: 700;
 }

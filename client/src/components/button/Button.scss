@@ -3,11 +3,13 @@
 .btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   padding: 15px 62px;
   border-radius: 10px;
   cursor: pointer;
   @include m_regular;
+  text-align: center;
   transition: background .4s ease-out, border .4s ease-out, color .4s ease-out;
 
   svg {
@@ -34,6 +36,17 @@
     &:hover {
       background: $accent;
       border-color: $accent;
+    }
+  }
+
+  &.dark {
+    background: $primary;
+    border: 2px solid $primary;
+    color: $card;
+
+    &:hover {
+      background: transparent;
+      color: $primary;
     }
   }
 }

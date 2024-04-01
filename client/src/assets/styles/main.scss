@@ -31,3 +31,39 @@ h1 {
     @include xl_bold;
   }
 }
+
+#primary {
+  min-height: 83dvh;
+}
+
+.not-found {
+  &_holder {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  &_error {
+    text-align: center;
+    @include xxl_bold;
+    color: $accent;
+    display: block;
+  }
+
+  &_title {
+    text-align: center;
+    @include xl_bold;
+    color: $primary;
+    margin-bottom: 20px;
+  }
+
+  &_desc {
+    @include m_regular;
+    color: $secondary;
+    text-align: center;
+  }
+
+  &_btn {
+    margin-inline: auto;
+    margin-top: 20px;
+  }
+}

@@ -14,9 +14,9 @@ const Navbar: FC<INavbar> = ({className}) => {
         <li className="navbar-holder_item">
           <Link to="#" className="navbar-holder_item-link">Прайс-лист</Link>
         </li>
-        <li className="navbar-holder_item">
-          <Link to="#" className="navbar-holder_item-link">Услуги</Link>
-        </li>
+        {/*<li className="navbar-holder_item">*/}
+        {/*  <Link to="#" className="navbar-holder_item-link">Услуги</Link>*/}
+        {/*</li>*/}
         <li className="navbar-holder_item">
           <Link to="#" className="navbar-holder_item-link">Отзывы</Link>
         </li>

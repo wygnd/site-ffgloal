@@ -1,0 +1,88 @@
+@import "styles/variables";
+
+.footer {
+  padding: 42px 0 48px;
+
+  &-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    &_contacts {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      .contact-item {
+        &.phone {
+          @include p17600;
+          color: $primary;
+          text-decoration: none;
+          transition: color .4s ease-out;
+
+          &:hover {
+            color: $accent
+          }
+        }
+
+        &.socials {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+
+          .social-item {
+            background: $primary;
+            border-radius: 100%;
+            padding: 8px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $card;
+
+            svg {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    &_copyright {
+      @include m_regular;
+      color: $secondary;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .footer {
+    padding: 20px 0;
+
+    &-holder {
+      gap: 20px;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .footer {
+    &-holder {
+      &_contacts {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .contact-item {
+          &.socials {
+            gap: 10px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ import ArrowPrev from './images/arrow-prev.svg';
 
 const MainBanner = () => {
   return (
-    <div className="main-block">
+    <div id="main-block" className="main-block">
       <Container>
         <div className="main-block_top">
           <div className="main-block_content">
@@ -26,7 +26,7 @@ const MainBanner = () => {
                   <HelpCircleSvg/> Что это?
                 </span>
                 <span className="desc-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, sint.
+                  FBO (fulfilment by operator) - схема, которая предполагает хранение товаров на складе Ozon, а также организацию доставки силами маркетплейса. FBS (fulfilment by seller) - схема, при которой продавец обязан хранить товары на своем или арендованном складе, своими силами осуществлять доставку.
                 </span>
               </span>
             </div>
@@ -60,11 +60,12 @@ const MainBanner = () => {
             <Swiper
               modules={[Navigation]}
               speed={1000}
+              spaceBetween={10}
               navigation={{
                 prevEl: ".main-block_sales .main-block_theme .theme-prev",
                 nextEl: ".main-block_sales .main-block_theme .theme-next"
               }}
-              className="swiper .main-block_sales-swiper"
+              className=".main-block_sales-swiper"
             >
               <SwiperSlide className="swiper-slide">
                 <div className="main-block_sales-item">
@@ -72,10 +73,14 @@ const MainBanner = () => {
                 </div>
               </SwiperSlide>
               <SwiperSlide className="swiper-slide">
-                <img src={imageSlide} decoding="async" loading="lazy" alt="main-block_slide-item"/>
+                <div className="main-block_sales-item">
+                  <img src={imageSlide} decoding="async" loading="lazy" alt="main-block_slide-item"/>
+                </div>
               </SwiperSlide>
               <SwiperSlide className="swiper-slide">
-                <img src={imageSlide} decoding="async" loading="lazy" alt="main-block_slide-item"/>
+                <div className="main-block_sales-item">
+                  <img src={imageSlide} decoding="async" loading="lazy" alt="main-block_slide-item"/>
+                </div>
               </SwiperSlide>
             </Swiper>
             <div className="main-block_theme">

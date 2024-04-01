@@ -1,0 +1,151 @@
+@import "styles/variables";
+
+.contacts {
+  &-block {
+    padding: 40px 0 20px;
+  }
+
+  &-title {
+    @include xl_bold;
+    color: $primary;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  &-desc {
+    text-align: center;
+    @include m_regular;
+    color: $secondary;
+  }
+
+  &-holder {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 25px;
+
+    &_form {
+      background: $system;
+      border-radius: 30px;
+      height: 479px;
+    }
+
+    &_socials {
+      background: $accent;
+      border-radius: 30px;
+      padding: 50px 34px;
+      display: flex;
+      flex-direction: column;
+
+      .socials {
+        &-icon {
+          margin-top: 29px;
+          margin-inline: auto;
+          width: 66px;
+          height: 66px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 100%;
+          background: $primary;
+          color: $accent;
+
+          svg {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        &-name {
+          margin-top: 46px;
+          text-align: center;
+          @include m_regular;
+          color: $primary;
+        }
+
+        &-button {
+          margin-top: auto;
+          padding: 22px 24px;
+        }
+      }
+    }
+
+    &_info {
+      display: flex;
+      flex-direction: column;
+      gap: 23px;
+
+      .info {
+        &-item {
+          width: 100%;
+          height: 50%;
+          background: $system;
+          border-radius: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 44px 41px;
+
+          &_icon {
+            width: 66px;
+            height: 66px;
+            border-radius: 100%;
+            background: $accent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $card;
+            margin-bottom: 21px;
+
+            svg {
+              width: 25px;
+              height: 25px;
+            }
+          }
+
+          &_desc {
+            width: 90%;
+            @include m_regular;
+            color: $primary;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .contacts{
+    &-holder {
+      margin-top: 26px;
+      grid-template-columns: 100%;
+      gap: 10px;
+
+      &_form {
+        height: 300px;
+      }
+
+      &_socials {
+        .socials {
+          &-button {
+            margin-top: 20px;
+          }
+        }
+      }
+
+      &_info {
+        gap: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .contacts {
+    &-block {
+      padding: 20px 0;
+    }
+  }
+}

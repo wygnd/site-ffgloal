@@ -1,0 +1,147 @@
+@import "styles/variables";
+
+.services {
+  &-block {
+    padding: 40px 0;
+  }
+
+  &-title {
+    @include xl_bold;
+    color: $primary;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  &-holder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    list-style: none;
+
+    .service-item {
+      box-shadow: 0 2px 8px 0 rgba(71, 74, 89, 0.08), 0 2px 2px 0 rgba(71, 74, 89, 0.02);
+      background: $card;
+      padding: 24px 24px 46px 24px;
+      border-radius: 30px;
+
+      &_name {
+        padding: 16px 16px 0 16px;
+        @include l_bold;
+        color: $primary;
+        margin-bottom: 35px;
+      }
+
+      &_prices {
+        list-style: none;
+
+        .price-item {
+          padding: 8px 15px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 5px;
+          border-radius: 15px;
+
+          &_name {
+            @include m_regular;
+            color: $primary;
+            width: 70%;
+          }
+
+          &_value {
+            @include m_regular;
+            color: $primary;
+            text-align: right;
+            width: 30%;
+          }
+
+          &:nth-child(even) {
+            background: $accent;
+            padding: 14px 15px;
+          }
+        }
+      }
+    }
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 19px;
+    box-shadow: 0 2px 8px 0 rgba(71, 74, 89, 0.08), 0 2px 2px 0 rgba(71, 74, 89, 0.02);
+    background: $card;
+    padding: 39px 41px;
+    border-radius: 30px;
+
+    &_name {
+      @include  l_bold;
+      color: $primary;
+    }
+
+    &_button {
+      padding: 16px 106px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .services {
+    &-block {
+      padding: 20px 0;
+    }
+
+    &-title {
+      margin-bottom: 20px;
+    }
+
+    &-holder {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+
+      .service-item {
+        padding: 20px 10px;
+
+        &_name {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    &-footer {
+      padding: 40px 20px;
+
+      &_button {
+        padding: 15px 62px;
+      }
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  .services {
+    &-footer {
+      flex-direction: column;
+      padding: 20px;
+      gap: 20px;
+
+      &_name {
+        text-align: center;
+      }
+
+      &_button {
+        margin-inline: auto;
+        padding: 15px 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .services{
+    &-holder {
+      grid-template-columns: 100%;
+    }
+  }
+}
