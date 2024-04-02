@@ -83,6 +83,17 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     svgLoader,
     ...assetsLoader,
     scssLoader,
-    babelLoader
+    babelLoader,
+    {
+      test: /\.script\.js$/,
+      use: [
+        {
+          loader: 'script-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+      ]
+    }
   ]
 }
