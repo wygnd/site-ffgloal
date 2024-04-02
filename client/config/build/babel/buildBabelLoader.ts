@@ -19,7 +19,8 @@ export function buildBabelLoader(options: BuildOptions) {
       ],
     );
 
-    buildBabelPlugins.push("@babel/plugin-external-helpers");
+    buildBabelPlugins.push("@babel/plugin-transform-runtime");
+    // buildBabelPlugins.push("@babel/plugin-external-helpers")
   }
 
   return {
@@ -33,7 +34,8 @@ export function buildBabelLoader(options: BuildOptions) {
           "@babel/preset-env",
           "@babel/preset-typescript",
           ["@babel/preset-react", {
-            runtime: isDev ? "automatic" : "classic",
+            // runtime: isDev ? "automatic" : "classic",
+            targets: "defaults"
           }]
         ],
         plugins: buildBabelPlugins,
