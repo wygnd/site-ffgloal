@@ -29,7 +29,7 @@ const ContactsBlock = () => {
         <div className="contacts-title">Начнем работу?</div>
         <div className="contacts-desc">Оставьте заявку или напишите нам в Telegram/WhatsApp</div>
         <div className="contacts-holder">
-          <div className="contacts-holder_form" ref={scriptRef}></div>
+          {/*<div className="contacts-holder_form" ref={scriptRef}></div>*/}
           <div className="contacts-holder_socials">
             <div className="socials-icon">
               <IconTg/>
