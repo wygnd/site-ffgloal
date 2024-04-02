@@ -26,5 +26,37 @@
         }
       }
     }
+
+    &-mobile {
+      &_menu {
+        list-style: none;
+      }
+
+      &_item {
+        width: fit-content;
+        margin-bottom: 5px;
+
+        &-link {
+          text-decoration: none;
+          display: block;
+          @include m_regular;
+          color: $primary;
+
+          &:hover {
+            color: $accent;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .navbar {
+    &-holder {
+      &_menu {
+        gap: 20px;
+      }
+    }
   }
 }

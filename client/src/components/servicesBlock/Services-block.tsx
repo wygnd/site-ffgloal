@@ -186,7 +186,7 @@ const prices: IServiceItem[] = [
 
 const ServicesBlock = () => {
   return (
-    <div className="services-block">
+    <div id="services-block" className="services-block">
       <Container>
         <h2 className="services-title">Наши услуги</h2>
         <ul className="services-holder">

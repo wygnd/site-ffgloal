@@ -42,7 +42,7 @@ const reviews: IReviewItem[] = [
 
 const ReviewsBlock = () => {
   return (
-    <div className="reviews-block">
+    <div id="reviews-block" className="reviews-block">
       <Container>
         <div className="reviews-block_header">
           <div className="reviews-block_title">Наши клиенты</div>

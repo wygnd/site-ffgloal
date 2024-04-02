@@ -1,22 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Container from "@/components/container/Container";
 import IconTg from "./images/icon-tg.svg";
 import IconTime from "./images/icon-time.svg"
 import IconAddress from "./images/icon-address.svg"
 import {Button} from "@/components/button/Button";
 import "./Contacts-block.scss";
-import {Helmet} from "react-helmet";
 
 
 const ContactsBlock = () => {
 
+  // useEffect(() => {
+  //   const script = document.createElement('script');
+  //   script.src = 'https://cdn-ru.bitrix24.ru/b25617662/crm/form/loader_3.js';
+  //   script.async = true;
+  //   document.querySelector('#form-callback')?.appendChild(script);
+  //
+  //   return () => {
+  //     document.querySelector('#form-callback')?.removeChild(script);
+  //   }
+  // }, [])
+
   return (
-    <div className="contacts-block">
+    <div id="contacts-block" className="contacts-block">
       <Container>
         <div className="contacts-title">Начнем работу?</div>
         <div className="contacts-desc">Оставьте заявку или напишите нам в Telegram/WhatsApp</div>
         <div className="contacts-holder">
           <div className="contacts-holder_form">
+            <div id="form-callback" data-b24-form="inline/3/vww0fr" data-skip-moving="true"/>
           </div>
           <div className="contacts-holder_socials">
             <div className="socials-icon">
