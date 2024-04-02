@@ -9,19 +9,19 @@ import "./Contacts-block.scss";
 
 const ContactsBlock = () => {
 
-  const scriptRef = useRef(null);
-
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn-ru.bitrix24.ru/b25617662/crm/form/loader_3.js';
-    script.async = true;
-
-    scriptRef.current.appendChild(script);
-
-    return () => {
-      scriptRef.current.removeChild(script);
-    }
-  }, [])
+  // const scriptRef = useRef(null);
+  //
+  // useEffect(() => {
+  //   const script = document.createElement('script');
+  //   script.src = 'https://cdn-ru.bitrix24.ru/b25617662/crm/form/loader_3.js';
+  //   script.async = true;
+  //
+  //   scriptRef.current.appendChild(script);
+  //
+  //   return () => {
+  //     scriptRef.current.removeChild(script);
+  //   }
+  // }, [])
 
   return (
     <div id="contacts-block" className="contacts-block">
