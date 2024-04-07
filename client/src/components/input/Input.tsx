@@ -22,6 +22,7 @@ const Input: FC<IInputProps> = ({
         placeholder={placeholder}
         className={clsx(className)}
         {...props}
+        required={required}
         mask="+7 999 999-99-99"
         maskChar="_"
       />
