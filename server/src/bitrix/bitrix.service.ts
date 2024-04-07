@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {CreateDealDto} from "./dto/create-deal.dto";
-import {BitrixRepository} from "../main";
+import {BitrixRepository} from "../../dist/main";
 
 
 @Injectable()

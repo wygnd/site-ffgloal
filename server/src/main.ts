@@ -3,9 +3,6 @@ import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import * as cookieParser from "cookie-parser";
 import {ValidationPipe} from "@nestjs/common";
-import Bitrix from "@2bad/bitrix";
-
-export const BitrixRepository = Bitrix(process.env.BITRIX_REST_KEY);
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000;
