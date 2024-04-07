@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Container from "@/components/container/Container";
 import {Button} from "@/components/button/Button";
 import './Text-block.scss';
+import {modalStore} from "@/store/modal-store";
 
 const TextBlock: FC<TextBlockComponent> = ({
                                              block_id,
@@ -14,6 +15,9 @@ const TextBlock: FC<TextBlockComponent> = ({
                                              className = null,
                                              image = null
                                            }) => {
+
+  const {setModalForm} = modalStore();
+
   return (
     <div id={`text-block-${block_id}`} className={clsx(className, "text-block", is_reverse && "reverse-block")}>
       <Container>
@@ -27,9 +31,8 @@ const TextBlock: FC<TextBlockComponent> = ({
             }
             {button &&
 							<Button
-								component={"a"}
-								href={button.link}
 								className="text-block_button btn secondary"
+                onClick={() => setModalForm(true)}
 							>{button.text}</Button>
             }
           </div>

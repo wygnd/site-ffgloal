@@ -27,7 +27,6 @@
     &_form {
       background: $system;
       border-radius: 30px;
-      height: 479px;
     }
 
     &_socials {
@@ -122,10 +121,6 @@
       margin-top: 26px;
       grid-template-columns: 100%;
       gap: 10px;
-
-      &_form {
-        height: 300px;
-      }
 
       &_socials {
         .socials {

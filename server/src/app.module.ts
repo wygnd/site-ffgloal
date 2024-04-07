@@ -27,6 +27,7 @@ import {PageStatusModel} from "./pages/page-status.model";
 import {SettingModule} from './settings/setting.module';
 import {SettingModel} from "./settings/Setting.model";
 import {AuthModel} from "./auth/auth-model";
+import {BitrixModule} from './bitrix/bitrix.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import {AuthModel} from "./auth/auth-model";
     TypeModule,
     PageModule,
     SettingModule,
+    BitrixModule,
   ],
   controllers: [],
   providers: [],

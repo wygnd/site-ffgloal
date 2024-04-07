@@ -1,27 +1,15 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import Container from "@/components/container/Container";
 import IconTg from "./images/icon-tg.svg";
 import IconTime from "./images/icon-time.svg"
 import IconAddress from "./images/icon-address.svg"
 import {Button} from "@/components/button/Button";
 import "./Contacts-block.scss";
+import Form from "@/components/form/Form";
 
 
 const ContactsBlock = () => {
 
-  // const scriptRef = useRef(null);
-  //
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-  //   script.src = 'https://cdn-ru.bitrix24.ru/b25617662/crm/form/loader_3.js';
-  //   script.async = true;
-  //
-  //   scriptRef.current.appendChild(script);
-  //
-  //   return () => {
-  //     scriptRef.current.removeChild(script);
-  //   }
-  // }, [])
 
   return (
     <div id="contacts-block" className="contacts-block">
@@ -29,7 +17,9 @@ const ContactsBlock = () => {
         <div className="contacts-title">Начнем работу?</div>
         <div className="contacts-desc">Оставьте заявку или напишите нам в Telegram/WhatsApp</div>
         <div className="contacts-holder">
-          {/*<div className="contacts-holder_form" ref={scriptRef}></div>*/}
+          <div className="contacts-holder_form">
+            <Form/>
+          </div>
           <div className="contacts-holder_socials">
             <div className="socials-icon">
               <IconTg/>

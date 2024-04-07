@@ -1,0 +1,15 @@
+@import "styles/variables";
+
+input {
+  padding: 19px 22px;
+  border-radius: 10px;
+  background: $card;
+  border: 1px solid $card;
+  @include m_regular;
+  color: $ghost;
+
+  &::placeholder {
+    @include m_regular;
+    color: $ghost;
+  }
+}

@@ -126,6 +126,10 @@
 @media (max-width: 540px) {
   .header {
     &-holder {
+      &_phone {
+        display: none;
+      }
+
       &_button {
         display: none;
       }

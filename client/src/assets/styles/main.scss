@@ -32,6 +32,11 @@ h1 {
   }
 }
 
+h4 {
+  @include m_bold;
+  color: $primary;
+}
+
 #primary {
   min-height: 83dvh;
 }

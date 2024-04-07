@@ -22,7 +22,9 @@ const Navbar: FC<INavbar> = ({className, type = "desktop", closeMobile}) => {
       behavior: "smooth"
     });
 
-    closeMobile();
+    if (type === "mobile") {
+      closeMobile();
+    }
   }
 
   if (type === "desktop") {

@@ -11,8 +11,12 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import ArrowNext from './images/arrow-next.svg';
 import ArrowPrev from './images/arrow-prev.svg';
+import {modalStore} from "@/store/modal-store";
 
 const MainBanner = () => {
+
+  const {setModalForm} = modalStore();
+
   return (
     <div id="main-block" className="main-block">
       <Container>
@@ -52,8 +56,8 @@ const MainBanner = () => {
               </div>
             </div>
             <div className="info-buttons">
-              <Button component="a" href="/" target="_blank" className="btn primary">Сделать расчет</Button>
-              <Button component="a" href="/" target="_blank" className="btn secondary">Получить консультацию</Button>
+              <Button className="btn primary" onClick={() => setModalForm(true)}>Сделать расчет</Button>
+              <Button className="btn secondary" onClick={() => setModalForm(true)}>Получить консультацию</Button>
             </div>
           </div>
           <div className="main-block_sales">
