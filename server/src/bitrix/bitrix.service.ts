@@ -14,7 +14,7 @@ export class BitrixService {
         UF_CRM_1712469619350: dto.phone,
         UF_CRM_1712469654603: dto.message,
         UF_CRM_1712469689890: dto.callback,
-        ASSIGNED_BY_ID: "1",
+        ASSIGNED_BY_ID: "9",
       });
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);

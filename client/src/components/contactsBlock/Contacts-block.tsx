@@ -6,10 +6,10 @@ import IconAddress from "./images/icon-address.svg"
 import {Button} from "@/components/button/Button";
 import "./Contacts-block.scss";
 import Form from "@/components/form/Form";
+import {modalStore} from "@/store/modal-store";
 
 
 const ContactsBlock = () => {
-
 
   return (
     <div id="contacts-block" className="contacts-block">
@@ -25,7 +25,7 @@ const ContactsBlock = () => {
               <IconTg/>
             </div>
             <div className="socials-name">Напишите менеджеру в Telegram для уточнения всех вопросов</div>
-            <Button className="btn dark socials-button">Написать в Telegram</Button>
+            <Button component={"a"} href="https://t.me/FFGloba1" target="_blank" className="btn dark socials-button">Написать в Telegram</Button>
           </div>
           <div className="contacts-holder_info">
             <div className="info-item">

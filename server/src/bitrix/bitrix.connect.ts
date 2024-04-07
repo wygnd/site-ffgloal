@@ -1,4 +1,3 @@
-import bitrix from "@2bad/bitrix";
-import * as process from "node:process";
+import Bitrix from "@2bad/bitrix";
 
-export const BitrixRepository = bitrix(process.env.BITRIX_REPOSITORY_URL);
+export const BitrixRepository = Bitrix("https://discountshopglobal.bitrix24.ru/rest/33/8wnx7ejxrnumpr38/");
