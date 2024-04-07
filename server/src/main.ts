@@ -3,6 +3,7 @@ import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import * as cookieParser from "cookie-parser";
 import {ValidationPipe} from "@nestjs/common";
+import * as basicAuth from 'express-basic-auth'
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000;
@@ -18,6 +19,14 @@ async function bootstrap() {
     .setVersion("1.0.0")
     .addServer("https://ffglobal.ru/7000/api", "Main server side")
     .build();
+  app.use(
+    ['/api/docs', '/api/docs-json'],
+    basicAuth({
+      challenge: true,
+      // this is the username and password used to authenticate
+      users: {[process.env.SWAGGER_API_USERNAME]: process.env.SWAGGER_API_PASSWORD},
+    }),
+  );
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("/api/docs", app, document);
   app.setGlobalPrefix("/api");
