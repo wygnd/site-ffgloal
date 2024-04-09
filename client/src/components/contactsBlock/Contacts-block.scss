@@ -76,6 +76,7 @@
 
       .info {
         &-item {
+          text-decoration: none;
           width: 100%;
           height: 50%;
           background: $system;
@@ -116,7 +117,7 @@
 }
 
 @media (max-width: 1100px) {
-  .contacts{
+  .contacts {
     &-holder {
       margin-top: 26px;
       grid-template-columns: 100%;
@@ -126,6 +127,7 @@
         .socials {
           &-button {
             margin-top: 20px;
+            width: 100%;
           }
         }
       }
