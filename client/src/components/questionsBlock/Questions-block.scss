@@ -15,6 +15,9 @@
     width: 40%;
     @include  xl_bold;
     color: $primary;
+    position: sticky;
+    top: 135px;
+    height: fit-content;
   }
 
   &-wrapper {

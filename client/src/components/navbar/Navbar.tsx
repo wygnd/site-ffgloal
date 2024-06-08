@@ -18,7 +18,7 @@ const Navbar: FC<INavbar> = ({className, type = "desktop", closeMobile}) => {
     const block_id = target.getAttribute("href").split('#')[1];
     const block: HTMLElement = document.getElementById(block_id)
     window.scrollTo({
-      top: block.offsetTop,
+      top: block.offsetTop - 100,
       behavior: "smooth"
     });
 
@@ -43,7 +43,7 @@ const Navbar: FC<INavbar> = ({className, type = "desktop", closeMobile}) => {
             <a href="#reviews-block" className="navbar-holder_item-link" onClick={handleClickMenu}>Отзывы</a>
           </li>
           <li className="navbar-holder_item">
-            <a href="#text-block-1" className="navbar-holder_item-link" onClick={handleClickMenu}>О нас</a>
+            <a href="#advantages-block" className="navbar-holder_item-link" onClick={handleClickMenu}>О нас</a>
           </li>
           <li className="navbar-holder_item">
             <a href="#contacts-block" className="navbar-holder_item-link" onClick={handleClickMenu}>Контакты</a>

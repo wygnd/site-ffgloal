@@ -18,8 +18,8 @@ const Header = () => {
         <div className="header-holder">
           <Logo/>
           <div className="header-holder_content">
-            <a href="tel:+79361360000" className="header-holder_phone">+7 (936) 136-00-00</a>
             <Navbar className="header-holder_navbar"/>
+            <a href="tel:+79361360000" className="header-holder_phone">+7 (936) 136-00-00</a>
             <Button className="header-holder_button btn primary" onClick={() => setModalForm(true)}>
               Заказать звонок
               <ArrowRight/>

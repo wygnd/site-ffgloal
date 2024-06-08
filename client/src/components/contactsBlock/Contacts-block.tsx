@@ -19,11 +19,13 @@ const ContactsBlock = () => {
             <Form/>
           </div>
           <div className="contacts-holder_socials">
+            <Button component={"a"} href="https://wa.me/79361360000" target="_blank" className="btn dark socials-button socials-button-whatsapp">Написать
+              на WhatsApp</Button>
             <div className="socials-icon">
               <IconTg/>
             </div>
             <div className="socials-name">Напишите менеджеру в Telegram для уточнения всех вопросов</div>
-            <Button component={"a"} href="https://t.me/FFGloba1" target="_blank" className="btn dark socials-button">Написать
+            <Button component={"a"} href="https://t.me/FFGloba1" target="_blank" className="btn dark socials-button socials-button-telegramm">Написать
               в Telegram</Button>
           </div>
           <div className="contacts-holder_info">
@@ -33,7 +35,7 @@ const ContactsBlock = () => {
               </div>
               <div className="info-item_desc">На связи 7 дней в неделю с 8:00 до 18:00</div>
             </div>
-            <a href="https://yandex.ru/maps/-/CDRPfTkM" target="_blank"  className="info-item">
+            <a href="https://yandex.ru/maps/-/CDRPfTkM" target="_blank" className="info-item">
               <div className="info-item_icon">
                 <IconAddress/>
               </div>

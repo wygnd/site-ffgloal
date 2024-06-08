@@ -36,13 +36,13 @@ const Footer = () => {
                 +7 (936) 136 00 00
               </a>
               <div className="contact-item socials">
-                <a href="/" target="_blank" className="social-item">
+                <a href="https://t.me/FFGloba1" target="_blank" className="social-item">
                   <IconTG/>
                 </a>
                 <a href="/" target="_blank" className="social-item">
                   <IconVK/>
                 </a>
-                <a href="/" target="_blank" className="social-item">
+                <a href="https://wa.me/79361360000" target="_blank" className="social-item">
                   <IconWA/>
                 </a>
               </div>

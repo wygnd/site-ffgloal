@@ -8,7 +8,7 @@ import yaLogo from "@/assets/images/market-logo.png"
 import Button from "@/components/button/Base-button";
 import imageSlide from './images/image-slide.png';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {Navigation} from 'swiper/modules';
+import {Navigation, Autoplay} from 'swiper/modules';
 import ArrowNext from './images/arrow-next.svg';
 import ArrowPrev from './images/arrow-prev.svg';
 import {modalStore} from "@/store/modal-store";
@@ -22,7 +22,7 @@ const MainBanner = () => {
       <Container>
         <div className="main-block_top">
           <div className="main-block_content">
-            <h1 className="content-title">Фулфилмент полного цикла в Москве</h1>
+            <h1 className="content-title">Фулфилмент полного цикла в Москве и МО</h1>
             <div className="content-desc">
               Для маркетплейсов по схеме FBO и FBS
               <span className="desc-question">
@@ -62,9 +62,13 @@ const MainBanner = () => {
           </div>
           <div className="main-block_sales">
             <Swiper
-              modules={[Navigation]}
+              modules={[Navigation, Autoplay]}
               speed={1000}
               spaceBetween={10}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false
+              }}
               navigation={{
                 prevEl: ".main-block_sales .main-block_theme .theme-prev",
                 nextEl: ".main-block_sales .main-block_theme .theme-next"
